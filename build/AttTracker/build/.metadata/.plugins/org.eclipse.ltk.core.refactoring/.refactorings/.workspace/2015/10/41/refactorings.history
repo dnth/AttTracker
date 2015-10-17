@@ -1,0 +1,3 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<session version="1.0">&#x0A;<refactoring comment="Delete resource &apos;pyQt/test_serial.py&apos;" deleteContents="false" description="Delete resource &apos;pyQt/test_serial.py&apos;" element1="/pyQt/test_serial.py" flags="7" id="org.eclipse.ltk.core.refactoring.delete.resources" resources="1" stamp="1443975357854"/>&#x0A;<refactoring comment="Delete resource &apos;pyQt/tabbed_ui/Copy of main.py&apos;" deleteContents="false" description="Delete resource &apos;pyQt/tabbed_ui/Copy of main.py&apos;" element1="/pyQt/tabbed_ui/Copy of main.py" flags="7" id="org.eclipse.ltk.core.refactoring.delete.resources" resources="1" stamp="1444415513981"/>
+</session>

@@ -1,0 +1,14 @@
+INSTUPmplwidget
+/home/camaro/workspace/AttTracker/mplwidget.py
+INFOS:&&1|1|2|0&&2|3|2|1&&3|4|2|5&&3|6|2|5&&1|7|2|0&&2|3|2|7&&3|8|2|9&&3|10|2|9&&3|11|2|9
+mplwidget=2
+__init__=3
+fig=4
+MplCanvas=1
+MplWidget=7
+vbl=11
+canvas=8
+mpl_toolbar=10
+MplCanvas.__init__=5
+ax=6
+MplWidget.__init__=9

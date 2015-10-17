@@ -1,0 +1,76 @@
+from PyQt4 import QtGui, QtCore
+import sys 
+import serial.tools.list_ports
+from PyQt4 import QtCore as core
+
+import MySQLdb as mdb
+import datetime
+import serial
+from datetime import date, time
+from time import strftime
+
+import os
+import tabbed_design
+import urllib
+import os
+
+import numpy as np
+
+
+from matplotlib.backends.backend_qt4agg import FigureCanvasQTAgg as FigureCanvas
+from matplotlib.backends.backend_qt4agg import NavigationToolbar2QTAgg as NavigationToolbar
+from matplotlib.figure import Figure
+from read_graph_tables import calc_att_by_category, calc_att_by_category_alldept, calc_num_all_dept
+
+from mpldatacursor import datacursor
+from PIL import Image
+
+
+class AttendanceApp(QtGui.QMainWindow, tabbed_design.Ui_LWCAttendanceTaker):
+    def __init__(self):
+        # Explaining super is out of the scope of this article
+        # So please google it if you're not familar with it
+        # Simple reason why we use it here is that it allows us to
+        # access variables, methods etc in the design.py file
+        super(self.__class__, self).__init__()
+        self.setupUi(self)  # This is defined in design.py file automatically
+                            # It sets up layout and widgets that are defined
+        self.setWindowIcon(QtGui.QIcon('../python.jpg'))
+         
+        self.attendanceTab = AttendanceTab(self)
+         
+ 
+class AttendanceTab(QtGui.QMainWindow, tabbed_design.Ui_LWCAttendanceTaker):
+    def __init__(self, parent):
+         
+        super(self.__class__, self).__init__()
+        self.setupUi(self)
+         
+        QtGui.QMainWindow.__init__(self, parent)
+         
+        self.timer = QtCore.QTimer(self)
+        self.timer.timeout.connect(self.Time)
+        self.timer.timeout.connect(self.Date)
+        self.timer.start(1000)
+        self.lcdNumber_time.setDigitCount(8)
+        self.lcdNumber_time.display(strftime("%H"+":"+"%M"+":"+"%S"))
+        self.label_dynamic_date.setText(strftime("%Y"+" "+"%B"+" "+"%d"+", "+"%A"))
+         
+        self.label_dynamic_event.setText("BLAH")
+     
+    def Time(self):
+        self.lcdNumber_time.display(strftime("%H"+":"+"%M"+":"+"%S"))
+    def Date(self):
+        self.label_dynamic_date.setText(strftime("%Y"+" "+"%B"+" "+"%d"+", "+"%A"))
+ 
+ 
+def main():
+    app = QtGui.QApplication(sys.argv)  # A new instance of QApplication
+    form = AttendanceApp()                 # We set the form to be our ExampleApp (design)
+    form.show()                         # Show the form
+    app.exec_()                         # and execute the app
+ 
+ 
+if __name__ == '__main__':              # if we're running file directly and not importing it
+    main()
+

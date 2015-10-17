@@ -1,0 +1,4 @@
+MODULES_MANAGER_V2
+app_class|/home/camaro/workspace/pyQt/app_class.py
+basic_window|/home/camaro/workspace/pyQt/basic_window.py
+scan_serial|/home/camaro/workspace/pyQt/scan_serial.py

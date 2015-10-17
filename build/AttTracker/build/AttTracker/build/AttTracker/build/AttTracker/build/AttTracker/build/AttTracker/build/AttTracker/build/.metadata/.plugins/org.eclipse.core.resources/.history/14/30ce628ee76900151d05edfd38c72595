@@ -1,0 +1,5 @@
+import sys
+from PyQt4 import QtGui
+
+app = QtGui.QWidget()
+window.show()

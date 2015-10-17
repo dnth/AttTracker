@@ -1,0 +1,5 @@
+MODULES_MANAGER_V2
+read_arduino|/home/camaro/workspace/pyserial/read_arduino.py
+read_serial|/home/camaro/workspace/pyserial/read_serial.py
+read_serial_compare_db|/home/camaro/workspace/pyserial/read_serial_compare_db.py
+read_store_txt|/home/camaro/workspace/pyserial/read_store_txt.py

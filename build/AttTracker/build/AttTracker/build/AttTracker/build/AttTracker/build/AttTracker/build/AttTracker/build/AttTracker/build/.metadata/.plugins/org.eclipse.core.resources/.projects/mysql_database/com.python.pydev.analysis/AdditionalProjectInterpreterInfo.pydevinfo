@@ -1,0 +1,50 @@
+-- VERSION_4
+-- START DISKCACHE_2
+/home/camaro/workspace/.metadata/.plugins/org.eclipse.core.resources/.projects/mysql_database/com.python.pydev.analysis/v2_indexcache
+read_graph_tables|1443526284000000000|/home/camaro/workspace/mysql_database/read_graph_tables.py
+read_database|1443155784000000000|/home/camaro/workspace/mysql_database/read_database.py
+check_database_with_every_id|1443522760000000000|/home/camaro/workspace/mysql_database/check_database_with_every_id.py
+scores|1442926782000000000|/home/camaro/workspace/mysql_database/scores.py
+realtime_att_taking|1443525404000000000|/home/camaro/workspace/mysql_database/realtime_att_taking.py
+create_date_events|1443431446000000000|/home/camaro/workspace/mysql_database/create_date_events.py
+create_tables|1442818030000000000|/home/camaro/workspace/mysql_database/create_tables.py
+realtime_simulation_att_taking|1443518624000000000|/home/camaro/workspace/mysql_database/realtime_simulation_att_taking.py
+random_att_taking|1443438662000000000|/home/camaro/workspace/mysql_database/random_att_taking.py
+populate_tables|1442824180000000000|/home/camaro/workspace/mysql_database/populate_tables.py
+-- END DISKCACHE
+-- START DICTIONARY
+9
+4=read_graph_tables
+5=read_database
+3=check_database_with_every_id
+8=scores
+2=realtime_att_taking
+6=create_date_events
+1=realtime_simulation_att_taking
+9=random_att_taking
+7=populate_tables
+-- END DICTIONARY
+-- START TREE 1
+18
+ard|3|arduino!11@arduino!19@arduino!27@
+cal|1|calc_num_all_dept!34@
+cur|11|cur!27@cur!11@cur!19@current_date!11@cur!43@cur!51@cur!35@cur!59@current_time!11@cur!67@cur!75@
+dat|6|data!59@data!11@data!51@data!67@data!43@daterange!50@
+db|9|db!59@db!27@db!11@db!75@db!67@db!19@db!43@db!35@db!51@
+end|1|end_date!51@
+eve|3|event_date!11@event_type!11@event_id!11@
+i|1|i!75@
+id_|1|id_value!43@
+lis|3|list_of_members!75@list_of_status!75@list_of_events!75@
+mem|2|member_data!11@member_id!11@
+plo|3|plot_att_by_category!34@plot_dept_att!34@plot_dept_stats!34@
+ran|4|random_hour!11@random_date!11@random_min!11@random_status!75@
+rea|1|read_id!11@
+rec|1|record!11@
+rfi|1|rfid_list!11@
+sea|4|search_database_for_member_id!26@search_database_for_id!34@search_database_for_member_id!10@search_database_for_member_id!18@
+sta|1|start_date!51@
+-- END TREE
+-- START TREE 2
+0
+-- END TREE

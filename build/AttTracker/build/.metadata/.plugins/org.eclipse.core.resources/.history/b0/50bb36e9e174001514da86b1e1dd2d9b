@@ -1,0 +1,26 @@
+import sys,platform
+from cx_Freeze import setup, Executable
+
+def getTargetName():
+    myOS = platform.system()
+    if myOS == 'Linux':
+        return "AppName"
+    elif myOS == 'Windows':
+        return "AppName.exe"
+    else:   
+        return "AppName.dmg"
+
+
+base = None
+if sys.platform == "win32":
+    base = "Win32GUI"
+
+exe = Executable(script = "main.py", base=base, targetName = getTargetName())
+
+build_exe_options = {"packages": ["re", "sip"]}
+
+setup(  name = "setup",
+        version = "1.0",
+        description = "GUI Application!",
+        options = {"build_exe": build_exe_options},
+        executables = [exe])

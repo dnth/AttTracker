@@ -1,0 +1,41 @@
+-- VERSION_4
+-- START DISKCACHE_2
+/home/camaro/workspace/.metadata/.plugins/org.eclipse.core.resources/.projects/pyQt/com.python.pydev.analysis/v2_indexcache
+app_class|1444312872000000000|/home/camaro/workspace/pyQt/app_class.py
+scan_serial|1444312872000000000|/home/camaro/workspace/pyQt/scan_serial.py
+basic_window|1444312872000000000|/home/camaro/workspace/pyQt/basic_window.py
+-- END DISKCACHE
+-- START DICTIONARY
+6
+5=Window.connect_serial_port
+2=app_class
+3=scan_serial
+1=basic_window
+4=Window
+6=Window.home
+-- END DICTIONARY
+-- START TREE 1
+6
+app|1|app!11@
+cur|1|cur!19@
+db|1|db!19@
+run|1|run!18@
+sca|1|scan!26@
+win|2|window!11@Window!17@
+-- END TREE
+-- START TREE 2
+13
+__i|1|__init__!4&18@
+ard|1|arduino!5&19@
+btn|1|btn_connect!6&19@
+clo|1|close_application!4&18@
+com|1|comboBox!6&19@
+con|1|connect_serial_port!4&18@
+fra|1|frame!6&19@
+hom|1|home!4&18@
+lab|3|label_member_status!6&19@label_member_rfid!6&19@label_member_name!6&19@
+sca|1|scan_id!4&18@
+sea|1|search_database_for_member_id!4&18@
+tab|1|tabs!4&18@
+tim|1|timer!5&19@
+-- END TREE

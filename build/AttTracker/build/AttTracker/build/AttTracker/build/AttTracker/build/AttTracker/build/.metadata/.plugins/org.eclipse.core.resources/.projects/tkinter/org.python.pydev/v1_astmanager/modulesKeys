@@ -1,0 +1,14 @@
+MODULES_MANAGER_V2
+add_button|/home/camaro/workspace/tkinter/add_button.py
+add_image_text|/home/camaro/workspace/tkinter/add_image_text.py
+clock|/home/camaro/workspace/tkinter/clock.py
+com_ports_list|/home/camaro/workspace/tkinter/com_ports_list.py
+date|/home/camaro/workspace/tkinter/date.py
+event_handling|/home/camaro/workspace/tkinter/event_handling.py
+intro|/home/camaro/workspace/tkinter/intro.py
+list_com_ports_class|/home/camaro/workspace/tkinter/list_com_ports_class.py
+lwc_att_gui|/home/camaro/workspace/tkinter/lwc_att_gui.py
+lwc_att_gui_mk2|/home/camaro/workspace/tkinter/lwc_att_gui_mk2.py
+matplotlib_tk|/home/camaro/workspace/tkinter/matplotlib_tk.py
+menu_bar|/home/camaro/workspace/tkinter/menu_bar.py
+rfid_reader|/home/camaro/workspace/tkinter/rfid_reader.py

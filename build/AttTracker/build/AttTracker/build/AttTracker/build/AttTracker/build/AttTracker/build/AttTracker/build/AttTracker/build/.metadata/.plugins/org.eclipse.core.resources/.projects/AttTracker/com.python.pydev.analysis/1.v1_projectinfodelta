@@ -1,0 +1,10 @@
+INSTUPcreate_date_events
+/home/camaro/workspace/AttTracker/create_date_events.py
+INFOS:&&3|1|2|0&&3|3|2|0&&3|4|2|0&&2|5|2|0&&3|6|2|0&&3|7|2|0
+db=1
+end_date=7
+data=4
+cur=3
+create_date_events=2
+start_date=6
+daterange=5

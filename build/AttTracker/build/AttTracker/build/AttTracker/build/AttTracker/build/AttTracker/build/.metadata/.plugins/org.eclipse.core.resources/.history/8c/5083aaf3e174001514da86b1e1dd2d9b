@@ -1,0 +1,47 @@
+# import sys,platform
+# from cx_Freeze import setup, Executable
+# 
+# def getTargetName():
+#     myOS = platform.system()
+#     if myOS == 'Linux':
+#         return "AppName"
+#     elif myOS == 'Windows':
+#         return "AppName.exe"
+#     else:   
+#         return "AppName.dmg"
+# 
+# 
+# base = None
+# if sys.platform == "win32":
+#     base = "Win32GUI"
+# 
+# exe = Executable(script = "main.py", base=base, targetName = getTargetName())
+# 
+# build_exe_options = {"packages": ["re", "sip"]}
+# 
+# setup(  name = "setup",
+#         version = "1.0",
+#         description = "GUI Application!",
+#         options = {"build_exe": build_exe_options},
+#         executables = [exe])
+
+from cx_Freeze import setup, Executable
+
+# Dependencies are automatically detected, but it might need
+# fine tuning.
+buildOptions = dict(packages = [], excludes = [])
+
+import sys
+base = 'Win32GUI' if sys.platform=='win32' else None
+
+executables = [
+    Executable('main.py', base=base)
+]
+
+setup(
+    name='Tetris',
+    version = '0.1',
+    description = 'A PyQt Tetris Program',
+    options = dict(build_exe = buildOptions),
+    executables = executables
+)

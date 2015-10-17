@@ -1,0 +1,24 @@
+import sys
+from PyQt4.Qt import *
+
+class MainWindow(QMainWindow):
+    def __init__(self, *args):
+        QMainWindow.__init__(self, *args)
+        self.cw = QWidget(self)
+        self.setCentralWidget(self.cw)
+        self.btn1 = QPushButton("Click me", self.cw)
+        self.btn1.setGeometry(QRect(50, 50, 100, 30))
+        self.btn1.clicked.connect(self.printWow)
+        
+        self.btn2 = QPushButton("Click me", self.cw)
+        self.btn2.setGeometry(QRect(50, 20, 100, 30))
+        self.btn2.clicked.connect(self.printWow)
+        
+    def printWow(self):
+        self.btn1.setText("WoW")
+
+if __name__ == "__main__":
+    app = QApplication(sys.argv)
+    myapp = MainWindow()
+    myapp.show()
+    sys.exit(app.exec_())

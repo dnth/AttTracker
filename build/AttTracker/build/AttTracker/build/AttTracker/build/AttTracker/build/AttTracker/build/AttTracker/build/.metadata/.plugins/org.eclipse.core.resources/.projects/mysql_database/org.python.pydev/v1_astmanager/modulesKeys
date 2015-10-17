@@ -1,0 +1,11 @@
+MODULES_MANAGER_V2
+check_database_with_every_id|/home/camaro/workspace/mysql_database/check_database_with_every_id.py
+create_date_events|/home/camaro/workspace/mysql_database/create_date_events.py
+create_tables|/home/camaro/workspace/mysql_database/create_tables.py
+populate_tables|/home/camaro/workspace/mysql_database/populate_tables.py
+random_att_taking|/home/camaro/workspace/mysql_database/random_att_taking.py
+read_database|/home/camaro/workspace/mysql_database/read_database.py
+read_graph_tables|/home/camaro/workspace/mysql_database/read_graph_tables.py
+realtime_att_taking|/home/camaro/workspace/mysql_database/realtime_att_taking.py
+realtime_simulation_att_taking|/home/camaro/workspace/mysql_database/realtime_simulation_att_taking.py
+scores|/home/camaro/workspace/mysql_database/scores.py

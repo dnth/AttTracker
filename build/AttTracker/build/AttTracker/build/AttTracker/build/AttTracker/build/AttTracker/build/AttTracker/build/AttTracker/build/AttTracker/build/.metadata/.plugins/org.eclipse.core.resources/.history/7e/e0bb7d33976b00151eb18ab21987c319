@@ -1,0 +1,319 @@
+from PyQt4 import QtGui # Import the PyQt4 module we'll need
+import sys # We need sys so that we can pass argv to QApplication
+import serial.tools.list_ports
+from PyQt4 import QtCore as core
+
+import MySQLdb as mdb
+import datetime
+import serial
+from datetime import date, time
+
+import design # This file holds our MainWindow and all design related things
+              # it also keeps events etc that we defined in Qt Designer
+              
+db = mdb.connect(charset='utf8', host="127.0.0.1", user="root", passwd="root", db="lwc_members")
+cur = db.cursor()
+
+class ExampleApp(QtGui.QMainWindow, design.Ui_LWCAttendanceTaker):
+    def __init__(self):
+        # Explaining super is out of the scope of this article
+        # So please google it if you're not familar with it
+        # Simple reason why we use it here is that it allows us to
+        # access variables, methods etc in the design.py file
+        super(self.__class__, self).__init__()
+        self.setupUi(self)  # This is defined in design.py file automatically
+                            # It sets up layout and widgets that are defined
+        self.setWindowIcon(QtGui.QIcon('../python.jpg'))
+        
+        
+        self.home()
+                            
+    def home(self):
+        self.pushButton_quit.clicked.connect(self.close_application)
+        self.pushButton_connect.clicked.connect(self.connect_serial_port)
+        
+        
+        serialPortsList = sorted(serial.tools.list_ports.comports())
+        serial_list = []
+        for port in serialPortsList:
+            serial_list.append(port[0])
+        self.comboBox_serialPort.addItems(serial_list)
+    
+    def close_application(self):
+        print "Whoaa so custom!!!"
+        sys.exit()
+        
+    def connect_serial_port(self):
+        self.arduino = serial.Serial(str(self.comboBox_serialPort.currentText()), 9600, timeout=0, writeTimeout=0)
+        
+        # Check If there is connection
+        if self.arduino:
+            print "Connected to", str(self.comboBox_serialPort.currentText())
+            
+            self.timer = core.QTimer(self)
+            self.timer.timeout.connect(self.scan_id)
+            self.timer.start(100)
+        
+            self.pushButton_connect.setStyleSheet("background-color: lightgreen")
+            self.pushButton_connect.setText("Connected!")
+            self.statusBar().showMessage("Connected to %s" % str(self.comboBox_serialPort.currentText()))
+            
+    def search_database_for_member_id(self, rfid):
+        '''
+        Search databse for member identity and print
+        param: id reader
+        return: member_id 
+        '''
+        cur.execute("SELECT * FROM members_list WHERE rfid_num='%s' " % rfid)
+        mysql_data = cur.fetchall()
+        return mysql_data
+    
+    def scan_id(self):
+#         data = arduino.readline()
+        try:
+            data = self.arduino.read(self.arduino.inWaiting())
+        except:
+            print("Error reading from %s " % str(self.comboBox.currentText()) )
+            self.statusBar().showMessage("Error reading from %s, plug in the reader and restart application! " % str(self.comboBox.currentText()))
+            
+        
+#         print "Nothing"
+        if len(data) > 11:
+            print "ID detected"
+            read_id = data[:12]
+            print read_id
+            self.label_dynamic_rfid.setText(read_id)
+            
+            member_data = self.search_database_for_member_id(read_id)
+            if member_data:
+                member_id = member_data[0][0] 
+#                 self.name_label.set(member_data[0][3])
+#                 self.name_chi_label.set(member_data[0][2])
+                print "Name:",member_data[0][2]
+                self.label_dynamic_name.setText(member_data[0][2])
+                
+#                 current_date = datetime.datetime.date(datetime.datetime.now())
+#                 current_time = datetime.datetime.time(datetime.datetime.now())
+                current_date = date(2015,9,1)
+                current_time = time(9,0,0)
+                 
+                if current_date.strftime("%A") == "Sunday" and current_time >= time(7,0,0) and current_time <= time(10,30,0):
+                    event_type = "Sunday Service"
+                    event_date = current_date
+                    cur.execute("SELECT * FROM event_test WHERE event_type='%s' AND event_date='%s' " % (event_type, event_date) )
+                    event_id = str(cur.fetchall()[0][0])
+                    # search for existing record before inserting
+                    cur.execute("SELECT * FROM attendance_test_2 WHERE member_id='%d' AND event_id='%d' " % ( int(member_id), int(event_id) ) )
+                    if cur.fetchall() == ():
+                        cur.execute("INSERT INTO attendance_test_2 VALUES (NULL, '%d', '%d', 'P' )" % ( int(member_id), int(event_id) ))
+                        db.commit()
+                        print "Recorded!"
+                        print "Member:", member_data[0][2]
+                        print "Event:", event_type, event_date 
+#                         self.status_label.set("Recorded!\nMember:%s\nEvent:%s %s" % (member_data[0][2],event_type, event_date))
+                        
+                    else:
+                        print "Record exists for:"
+                        print "Member:", member_data[0][2]
+                        print "Event:", event_type, event_date
+#                         self.status_label.set("Record exists for\nMember:%s\nEvent: %s %s " % (member_data[0][2], event_type, event_date))
+                
+                elif current_date.strftime("%A") == "Wednesday" and current_time >= time(18,0,0) and current_time <= time(21,0,0):
+                    event_type = "Wednesday Service"
+                    event_date = current_date
+                    cur.execute("SELECT * FROM event_test WHERE event_type='%s' AND event_date='%s' " % (event_type, event_date) )
+                    event_id = str(cur.fetchall()[0][0])
+                    # search for existing record before inserting
+                    cur.execute("SELECT * FROM attendance_test_2 WHERE member_id='%d' AND event_id='%d' " % ( int(member_id), int(event_id) ) )
+                    if cur.fetchall() == ():
+                        cur.execute("INSERT INTO attendance_test_2 VALUES (NULL, '%d', '%d', 'P' )" % ( int(member_id), int(event_id) ))
+                        db.commit()
+                        print "Recorded!"
+                        print "Member:", member_data[0][2]
+                        print "Event:", event_type, event_date 
+#                         self.status_label.set("Recorded!\nMember:%s\nEvent:%s %s" % (member_data[0][2],event_type, event_date))
+                    else:
+                        print "Record exists for:"
+                        print "Member:", member_data[0][2]
+                        print "Event:", event_type, event_date
+#                         self.status_label.set("Record exists for\nMember:%s\nEvent: %s %s " % (member_data[0][2], event_type, event_date))
+                   
+                elif current_date.strftime("%A") == "Friday" and current_time >= time(18,0,0) and current_time <= time(21,0,0):
+                    event_type = "Friday Prayer Meeting"
+                    event_date = current_date
+                    cur.execute("SELECT * FROM event_test WHERE event_type='%s' AND event_date='%s' " % (event_type, event_date) ) 
+                    event_id = str(cur.fetchall()[0][0])
+                    # search for existing record before inserting
+                    cur.execute("SELECT * FROM attendance_test_2 WHERE member_id='%d' AND event_id='%d' " % ( int(member_id), int(event_id) ) )
+                    if cur.fetchall() == ():
+                        cur.execute("INSERT INTO attendance_test_2 VALUES (NULL, '%d', '%d', 'P' )" % ( int(member_id), int(event_id) ))
+                        db.commit()
+                        print "Recorded!"
+                        print "Member:", member_data[0][2]
+                        print "Event:", event_type, event_date 
+#                         self.status_label.set("Recorded!\nMember:%s\nEvent:%s %s" % (member_data[0][2],event_type, event_date))
+                    else:
+                        print "Record exists for:"
+                        print "Member:", member_data[0][2]
+                        print "Event:", event_type, event_date
+#                         self.status_label.set("Record exists for\nMember:%s\nEvent: %s %s " % (member_data[0][2], event_type, event_date))
+                   
+                # dawn service
+                elif current_date.strftime("%A") == "Sunday" and current_time >= time(0,0,0) and current_time <= time(5,0,0):
+                    event_type = "Dawn Service"
+                    event_date = current_date
+                    cur.execute("SELECT * FROM event_test WHERE event_type='%s' AND event_date='%s' " % (event_type, event_date) )
+                    event_id = str(cur.fetchall()[0][0])
+                    # search for existing record before inserting
+                    cur.execute("SELECT * FROM attendance_test_2 WHERE member_id='%d' AND event_id='%d' " % ( int(member_id), int(event_id) ) )
+                    if cur.fetchall() == ():
+                        cur.execute("INSERT INTO attendance_test_2 VALUES (NULL, '%d', '%d', 'P' )" % ( int(member_id), int(event_id) ))
+                        db.commit()
+                        print "Recorded!"
+                        print "Member:", member_data[0][2]
+                        print "Event:", event_type, event_date 
+#                         self.status_label.set("Recorded!\nMember:%s\nEvent:%s %s" % (member_data[0][2],event_type, event_date))
+                    else:
+                        print "Record exists for:"
+                        print "Member:", member_data[0][2]
+                        print "Event:", event_type, event_date
+#                         self.status_label.set("Record exists for\nMember:%s\nEvent: %s %s " % (member_data[0][2], event_type, event_date))
+                         
+                elif current_date.strftime("%A") == "Monday" and current_time >= time(0,0,0) and current_time <= time(5,0,0):
+                    event_type = "Dawn Service"
+                    event_date = current_date
+                    cur.execute("SELECT * FROM event_test WHERE event_type='%s' AND event_date='%s' " % (event_type, event_date) )
+                    event_id = str(cur.fetchall()[0][0])
+                    # search for existing record before inserting
+                    cur.execute("SELECT * FROM attendance_test_2 WHERE member_id='%d' AND event_id='%d' " % ( int(member_id), int(event_id) ) )
+                    if cur.fetchall() == ():
+                        cur.execute("INSERT INTO attendance_test_2 VALUES (NULL, '%d', '%d', 'P' )" % ( int(member_id), int(event_id) ))
+                        db.commit()
+                        print "Recorded!"
+                        print "Member:", member_data[0][2]
+                        print "Event:", event_type, event_date 
+#                         self.status_label.set("Recorded!\nMember:%s\nEvent:%s %s" % (member_data[0][2],event_type, event_date))
+                    else:
+                        print "Record exists for:"
+                        print "Member:", member_data[0][2]
+                        print "Event:", event_type, event_date
+#                         self.status_label.set("Record exists for\nMember:%s\nEvent: %s %s " % (member_data[0][2], event_type, event_date))
+                       
+                elif current_date.strftime("%A") == "Tuesday" and current_time >= time(0,0,0) and current_time <= time(5,0,0):
+                    event_type = "Dawn Service"
+                    event_date = current_date
+                    cur.execute("SELECT * FROM event_test WHERE event_type='%s' AND event_date='%s' " % (event_type, event_date) )
+                    event_id = str(cur.fetchall()[0][0])
+                    # search for existing record before inserting
+                    cur.execute("SELECT * FROM attendance_test_2 WHERE member_id='%d' AND event_id='%d' " % ( int(member_id), int(event_id) ) )
+                    if cur.fetchall() == ():
+                        cur.execute("INSERT INTO attendance_test_2 VALUES (NULL, '%d', '%d', 'P' )" % ( int(member_id), int(event_id) ))
+                        db.commit()
+                        print "Recorded!"
+                        print "Member:", member_data[0][2]
+                        print "Event:", event_type, event_date 
+#                         self.status_label.set("Recorded!\nMember:%s\nEvent:%s %s" % (member_data[0][2],event_type, event_date))
+                    else:
+                        print "Record exists for:"
+                        print "Member:", member_data[0][2]
+                        print "Event:", event_type, event_date
+#                         self.status_label.set("Record exists for\nMember:%s\nEvent: %s %s " % (member_data[0][2], event_type, event_date))
+                       
+                elif current_date.strftime("%A") == "Wednesday" and current_time >= time(0,0,0) and current_time <= time(5,0,0):
+                    event_type = "Dawn Service"
+                    event_date = current_date
+                    cur.execute("SELECT * FROM event_test WHERE event_type='%s' AND event_date='%s' " % (event_type, event_date) )
+                    event_id = str(cur.fetchall()[0][0])
+                    # search for existing record before inserting
+                    cur.execute("SELECT * FROM attendance_test_2 WHERE member_id='%d' AND event_id='%d' " % ( int(member_id), int(event_id) ) )
+                    if cur.fetchall() == ():
+                        cur.execute("INSERT INTO attendance_test_2 VALUES (NULL, '%d', '%d', 'P' )" % ( int(member_id), int(event_id) ))
+                        db.commit()
+                        print "Recorded!"
+                        print "Member:", member_data[0][2]
+                        print "Event:", event_type, event_date 
+#                         self.status_label.set("Recorded!\nMember:%s\nEvent:%s %s" % (member_data[0][2],event_type, event_date))
+                    else:
+                        print "Record exists for:"
+                        print "Member:", member_data[0][2]
+                        print "Event:", event_type, event_date
+#                         self.status_label.set("Record exists for\nMember:%s\nEvent: %s %s " % (member_data[0][2], event_type, event_date))
+                       
+                elif current_date.strftime("%A") == "Thursday" and current_time >= time(0,0,0) and current_time <= time(5,0,0):
+                    event_type = "Dawn Service"
+                    event_date = current_date
+                    cur.execute("SELECT * FROM event_test WHERE event_type='%s' AND event_date='%s' " % (event_type, event_date) )
+                    event_id = str(cur.fetchall()[0][0])
+                    # search for existing record before inserting
+                    cur.execute("SELECT * FROM attendance_test_2 WHERE member_id='%d' AND event_id='%d' " % ( int(member_id), int(event_id) ) )
+                    if cur.fetchall() == ():
+                        cur.execute("INSERT INTO attendance_test_2 VALUES (NULL, '%d', '%d', 'P' )" % ( int(member_id), int(event_id) ))
+                        db.commit()
+                        print "Recorded!"
+                        print "Member:", member_data[0][2]
+                        print "Event:", event_type, event_date 
+#                         self.status_label.set("Recorded!\nMember:%s\nEvent:%s %s" % (member_data[0][2],event_type, event_date))
+                    else:
+                        print "Record exists for:"
+                        print "Member:", member_data[0][2]
+                        print "Event:", event_type, event_date
+#                         self.status_label.set("Record exists for\nMember:%s\nEvent: %s %s " % (member_data[0][2], event_type, event_date))
+                       
+                elif current_date.strftime("%A") == "Friday" and current_time >= time(0,0,0) and current_time <= time(5,0,0):
+                    event_type = "Dawn Service"
+                    event_date = current_date
+                    cur.execute("SELECT * FROM event_test WHERE event_type='%s' AND event_date='%s' " % (event_type, event_date) )
+                    event_id = str(cur.fetchall()[0][0])
+                    # search for existing record before inserting
+                    cur.execute("SELECT * FROM attendance_test_2 WHERE member_id='%d' AND event_id='%d' " % ( int(member_id), int(event_id) ) )
+                    if cur.fetchall() == ():
+                        cur.execute("INSERT INTO attendance_test_2 VALUES (NULL, '%d', '%d', 'P' )" % ( int(member_id), int(event_id) ))
+                        db.commit()
+                        print "Recorded!"
+                        print "Member:", member_data[0][2]
+                        print "Event:", event_type, event_date 
+#                         self.status_label.set("Recorded!\nMember:%s\nEvent:%s %s" % (member_data[0][2],event_type, event_date))
+                    else:
+                        print "Record exists for:"
+                        print "Member:", member_data[0][2]
+                        print "Event:", event_type, event_date
+#                         self.status_label.set("Record exists for\nMember:%s\nEvent: %s %s " % (member_data[0][2], event_type, event_date))
+                       
+                elif current_date.strftime("%A") == "Saturday" and current_time >= time(0,0,0) and current_time <= time(5,0,0):
+                    event_type = "Dawn Service"
+                    event_date = current_date
+                    cur.execute("SELECT * FROM event_test WHERE event_type='%s' AND event_date='%s' " % (event_type, event_date) )
+                    event_id = str(cur.fetchall()[0][0])
+                    # search for existing record before inserting
+                    cur.execute("SELECT * FROM attendance_test_2 WHERE member_id='%d' AND event_id='%d' " % ( int(member_id), int(event_id) ) )
+                    if cur.fetchall() == ():
+                        cur.execute("INSERT INTO attendance_test_2 VALUES (NULL, '%d', '%d', 'P' )" % ( int(member_id), int(event_id) ))
+                        db.commit()
+                        print "Recorded!"
+                        print "Member:", member_data[0][2]
+                        print "Event:", event_type, event_date 
+#                         self.status_label.set("Recorded!\nMember:%s\nEvent:%s %s" % (member_data[0][2],event_type, event_date))
+                    else:
+                        print "Record exists for:"
+                        print "Member:", member_data[0][2]
+                        print "Event:", event_type, event_date
+#                         self.status_label.set("Record exists for\nMember:%s\nEvent: %s %s " % (member_data[0][2], event_type, event_date))
+                else:
+                    print "No event now!"
+                    print current_date, current_time
+                    self.label_dynamic_status.setText("No event now!\nCurrent date: %s\nCurrent time: %s" % (current_date, current_time))
+#                     self.status_label.set("No event now!\nCurrent date: %s \nCurrent time:%s" % (current_date, current_time))
+            else:
+                print "Sorry no match in database!"
+#                 self.status_label.set("Sorry no match in database!")
+
+
+def main():
+    app = QtGui.QApplication(sys.argv)  # A new instance of QApplication
+    form = ExampleApp()                 # We set the form to be our ExampleApp (design)
+    form.show()                         # Show the form
+    app.exec_()                         # and execute the app
+
+
+if __name__ == '__main__':              # if we're running file directly and not importing it
+    main()    

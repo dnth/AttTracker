@@ -1,0 +1,40 @@
+import sys
+from PyQt4.Qt import *
+
+# class MainWindow(QMainWindow):
+#     def __init__(self, *args):
+#         QMainWindow.__init__(self, *args)
+#         self.cw = QWidget(self)
+#         self.setCentralWidget(self.cw)
+#         self.btn1 = QPushButton("Click me", self.cw)
+#         self.btn1.setGeometry(QRect(50, 50, 100, 30))
+#         self.btn1.clicked.connect(self.printWow)
+#         
+#         self.btn2 = QPushButton("Click me", self.cw)
+#         self.btn2.setGeometry(QRect(50, 20, 100, 30))
+#         self.btn2.clicked.connect(self.printWow)
+#         
+#     def printWow(self):
+#         self.btn1.setText("WoW")
+
+class MainWindow(QMainWindow):
+    def __init__(self, *args):
+        QMainWindow.__init__(self, *args)
+        self.cw = QWidget(self)
+        self.setCentralWidget(self.cw)
+        self.btn1 = QPushButton("Click me", self.cw)
+        self.btn1.setGeometry(QRect(50, 50, 100, 30))
+        self.btn1.clicked.connect(lambda: self.printWow(self.btn1))
+
+        self.btn2 = QPushButton("Click me", self.cw)
+        self.btn2.setGeometry(QRect(50, 20, 100, 30))
+        self.btn2.clicked.connect(lambda: self.printText(self.btn2, "Yay!"))
+
+    def printText(self, target, text="wow"):
+        target.setText(text)
+
+if __name__ == "__main__":
+    app = QApplication(sys.argv)
+    myapp = MainWindow()
+    myapp.show()
+    sys.exit(app.exec_())

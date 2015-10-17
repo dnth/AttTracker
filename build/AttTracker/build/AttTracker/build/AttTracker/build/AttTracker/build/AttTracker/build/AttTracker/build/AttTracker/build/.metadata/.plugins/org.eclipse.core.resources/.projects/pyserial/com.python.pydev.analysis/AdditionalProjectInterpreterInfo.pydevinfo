@@ -1,0 +1,31 @@
+-- VERSION_4
+-- START DISKCACHE_2
+/home/camaro/workspace/.metadata/.plugins/org.eclipse.core.resources/.projects/pyserial/com.python.pydev.analysis/v2_indexcache
+read_serial_compare_db|1443434324000000000|/home/camaro/workspace/pyserial/read_serial_compare_db.py
+read_serial|1442990158000000000|/home/camaro/workspace/pyserial/read_serial.py
+read_arduino|1442991898000000000|/home/camaro/workspace/pyserial/read_arduino.py
+read_store_txt|1443432254000000000|/home/camaro/workspace/pyserial/read_store_txt.py
+-- END DISKCACHE
+-- START DICTIONARY
+4
+3=read_serial_compare_db
+4=read_serial
+1=read_arduino
+2=read_store_txt
+-- END DICTIONARY
+-- START TREE 1
+10
+ard|3|arduino!11@arduino!19@arduino!27@
+cou|1|counter!35@
+cur|1|cur!27@
+dat|2|data!11@data!27@
+db|1|db!27@
+id|1|id!27@
+mys|1|mysql_data!27@
+rea|1|read_id!27@
+sea|1|search_database!26@
+ser|1|ser!35@
+-- END TREE
+-- START TREE 2
+0
+-- END TREE
