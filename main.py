@@ -14,6 +14,7 @@ import tabbed_design
 # import urllib
 import os
 
+from importserial import load_serial_ports
 # from time import sleep
 
 # from matplotlib.backends.backend_qt4agg import FigureCanvasQTAgg as FigureCanvas
@@ -59,7 +60,7 @@ class AttendanceApp(QtGui.QMainWindow, tabbed_design.Ui_LWCAttendanceTaker):
 #         self.statusbar.setStyleSheet("QStatusBar{padding-left:8px;background:rgba(0,0,0,0);color:black;font-weight:bold;}")
         self.pushButton_quit.clicked.connect(self.close_application)
         self.pushButton_connect.clicked.connect(self.connect_serial_port)
-        self.pushButton_refresh.clicked.connect(self.load_serial_port)
+        self.pushButton_refresh.clicked.connect(self.load_serial_port_2)
         self.pushButton_disconnect.clicked.connect(self.disconnect_serial_port)
         self.pushButton_disconnect.setEnabled(False)
         
@@ -68,7 +69,7 @@ class AttendanceApp(QtGui.QMainWindow, tabbed_design.Ui_LWCAttendanceTaker):
         self.pushButton_plot.clicked.connect(self.plot_all_service)
         
         # serial port stuff
-        self.load_serial_port()
+        self.load_serial_port_2()
         
         # attendance marking stuff
         self.pushButton_submit.clicked.connect(self.submit_attendance)
@@ -732,6 +733,10 @@ class AttendanceApp(QtGui.QMainWindow, tabbed_design.Ui_LWCAttendanceTaker):
         for port in serialPortsList:
             serial_list.append(port[0])
         self.comboBox_serialPort.addItems(serial_list)
+        
+    def load_serial_port_2(self):
+        
+        self.comboBox_serialPort.addItems(load_serial_ports())
     
     def disconnect_serial_port(self):
         self.arduino.close()
