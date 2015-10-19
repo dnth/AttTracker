@@ -29,8 +29,6 @@ from read_graph_tables import calc_att_by_category, calc_att_by_category_alldept
 
 from mpldatacursor import datacursor
 
-
-
 class AttendanceApp(QtGui.QMainWindow, tabbed_design.Ui_LWCAttendanceTaker):
     def __init__(self):
         # Explaining super is out of the scope of this article
@@ -41,7 +39,7 @@ class AttendanceApp(QtGui.QMainWindow, tabbed_design.Ui_LWCAttendanceTaker):
         self.setupUi(self)  # This is defined in design.py file automatically
                             # It sets up layout and widgets that are defined
         self.setWindowIcon(QtGui.QIcon('python.jpg'))
-        
+
         self.actionQuit.triggered.connect(self.close_application)
         
         self.actionQuit.setStatusTip("Leave the application")
@@ -812,8 +810,11 @@ class AttendanceApp(QtGui.QMainWindow, tabbed_design.Ui_LWCAttendanceTaker):
 
                 self.label_dynamic_dept.setText(member_data[0][4])
                 
+                
+                
                 if os.path.exists("pics/%s.jpg" % member_data[0][2]):
                     self.label_picture.setPixmap(QtGui.QPixmap("pics/%s.jpg" % member_data[0][2]).scaledToHeight(200) )
+
                 else:
                     self.label_picture.setPixmap(QtGui.QPixmap("unknown_profile.png" ).scaledToHeight(160))
                  
