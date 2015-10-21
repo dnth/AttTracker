@@ -68,7 +68,7 @@ while True:
             # search for existing record before inserting
             cur.execute("SELECT * FROM new_attendance_table WHERE member_id='%d' AND event_id='%d' " % ( int(member_id), int(event_id) ) )
             if cur.fetchall() == ():
-                cur.execute("INSERT INTO new_attendance_table VALUES (NULL, '%d', '%d', '%s' )" % ( int(member_id), int(event_id), random.choice(['P', 'B']) ))
+                cur.execute("INSERT INTO new_attendance_table VALUES (NULL, '%d', '%d', '%s', '%s' )" % ( int(member_id), int(event_id), random.choice(['P', 'B']),  datetime.datetime.combine(current_date, current_time)))
                 db.commit()
                 print "Recorded!"
                 print "Member:", member_data[0][2]
@@ -90,7 +90,7 @@ while True:
             # search for existing record before inserting
             cur.execute("SELECT * FROM new_attendance_table WHERE member_id='%d' AND event_id='%d' " % ( int(member_id), int(event_id) ) )
             if cur.fetchall() == ():
-                cur.execute("INSERT INTO new_attendance_table VALUES (NULL, '%d', '%d', '%s' )" % ( int(member_id), int(event_id), random.choice(['P', 'B']) ))
+                cur.execute("INSERT INTO new_attendance_table VALUES (NULL, '%d', '%d', '%s', '%s' )" % ( int(member_id), int(event_id), random.choice(['P', 'B']),  datetime.datetime.combine(current_date, current_time)))
                 db.commit()
                 print "Recorded!"
                 print "Member:", member_data[0][2]
@@ -110,7 +110,7 @@ while True:
             # search for existing record before inserting
             cur.execute("SELECT * FROM new_attendance_table WHERE member_id='%d' AND event_id='%d' " % ( int(member_id), int(event_id) ) )
             if cur.fetchall() == ():
-                cur.execute("INSERT INTO new_attendance_table VALUES (NULL, '%d', '%d', '%s' )" % ( int(member_id), int(event_id), random.choice(['P', 'B']) ))
+                cur.execute("INSERT INTO new_attendance_table VALUES (NULL, '%d', '%d', '%s', '%s' )" % ( int(member_id), int(event_id), random.choice(['P', 'B']),  datetime.datetime.combine(current_date, current_time)))
                 db.commit()
                 print "Recorded!"
                 print "Member:", member_data[0][2]
@@ -131,7 +131,7 @@ while True:
             # search for existing record before inserting
             cur.execute("SELECT * FROM new_attendance_table WHERE member_id='%d' AND event_id='%d' " % ( int(member_id), int(event_id) ) )
             if cur.fetchall() == ():
-                cur.execute("INSERT INTO new_attendance_table VALUES (NULL, '%d', '%d', '%s' )" % ( int(member_id), int(event_id), random.choice(['P', 'B']) ))
+                cur.execute("INSERT INTO new_attendance_table VALUES (NULL, '%d', '%d', '%s', '%s' )" % ( int(member_id), int(event_id), random.choice(['P', 'B']),  datetime.datetime.combine(current_date, current_time)))
                 db.commit()
                 print "Recorded!"
                 print "Member:", member_data[0][2]
@@ -151,7 +151,7 @@ while True:
             # search for existing record before inserting
             cur.execute("SELECT * FROM new_attendance_table WHERE member_id='%d' AND event_id='%d' " % ( int(member_id), int(event_id) ) )
             if cur.fetchall() == ():
-                cur.execute("INSERT INTO new_attendance_table VALUES (NULL, '%d', '%d', '%s' )" % ( int(member_id), int(event_id), random.choice(['P', 'B']) ))
+                cur.execute("INSERT INTO new_attendance_table VALUES (NULL, '%d', '%d', '%s', '%s' )" % ( int(member_id), int(event_id), random.choice(['P', 'B']),  datetime.datetime.combine(current_date, current_time)))
                 db.commit()
                 print "Recorded!"
                 print "Member:", member_data[0][2]
@@ -171,7 +171,7 @@ while True:
             # search for existing record before inserting
             cur.execute("SELECT * FROM new_attendance_table WHERE member_id='%d' AND event_id='%d' " % ( int(member_id), int(event_id) ) )
             if cur.fetchall() == ():
-                cur.execute("INSERT INTO new_attendance_table VALUES (NULL, '%d', '%d', '%s' )" % ( int(member_id), int(event_id), random.choice(['P', 'B']) ))
+                cur.execute("INSERT INTO new_attendance_table VALUES (NULL, '%d', '%d', '%s', '%s' )" % ( int(member_id), int(event_id), random.choice(['P', 'B']),  datetime.datetime.combine(current_date, current_time)))
                 db.commit()
                 print "Recorded!"
                 print "Member:", member_data[0][2]
@@ -191,7 +191,7 @@ while True:
             # search for existing record before inserting
             cur.execute("SELECT * FROM new_attendance_table WHERE member_id='%d' AND event_id='%d' " % ( int(member_id), int(event_id) ) )
             if cur.fetchall() == ():
-                cur.execute("INSERT INTO new_attendance_table VALUES (NULL, '%d', '%d', '%s' )" % ( int(member_id), int(event_id), random.choice(['P', 'B']) ))
+                cur.execute("INSERT INTO new_attendance_table VALUES (NULL, '%d', '%d', '%s', '%s' )" % ( int(member_id), int(event_id), random.choice(['P', 'B']),  datetime.datetime.combine(current_date, current_time)))
                 db.commit()
                 print "Recorded!"
                 print "Member:", member_data[0][2]
@@ -211,7 +211,7 @@ while True:
             # search for existing record before inserting
             cur.execute("SELECT * FROM new_attendance_table WHERE member_id='%d' AND event_id='%d' " % ( int(member_id), int(event_id) ) )
             if cur.fetchall() == ():
-                cur.execute("INSERT INTO new_attendance_table VALUES (NULL, '%d', '%d', '%s' )" % ( int(member_id), int(event_id), random.choice(['P', 'B']) ))
+                cur.execute("INSERT INTO new_attendance_table VALUES (NULL, '%d', '%d', '%s', '%s' )" % ( int(member_id), int(event_id), random.choice(['P', 'B']),  datetime.datetime.combine(current_date, current_time)))
                 db.commit()
                 print "Recorded!"
                 print "Member:", member_data[0][2]
@@ -231,7 +231,7 @@ while True:
             # search for existing record before inserting
             cur.execute("SELECT * FROM new_attendance_table WHERE member_id='%d' AND event_id='%d' " % ( int(member_id), int(event_id) ) )
             if cur.fetchall() == ():
-                cur.execute("INSERT INTO new_attendance_table VALUES (NULL, '%d', '%d', '%s' )" % ( int(member_id), int(event_id), random.choice(['P', 'B']) ))
+                cur.execute("INSERT INTO new_attendance_table VALUES (NULL, '%d', '%d', '%s', '%s' )" % ( int(member_id), int(event_id), random.choice(['P', 'B']),  datetime.datetime.combine(current_date, current_time)))
                 db.commit()
                 print "Recorded!"
                 print "Member:", member_data[0][2]
@@ -251,7 +251,7 @@ while True:
             # search for existing record before inserting
             cur.execute("SELECT * FROM new_attendance_table WHERE member_id='%d' AND event_id='%d' " % ( int(member_id), int(event_id) ) )
             if cur.fetchall() == ():
-                cur.execute("INSERT INTO new_attendance_table VALUES (NULL, '%d', '%d', '%s' )" % ( int(member_id), int(event_id), random.choice(['P', 'B']) ))
+                cur.execute("INSERT INTO new_attendance_table VALUES (NULL, '%d', '%d', '%s', '%s' )" % ( int(member_id), int(event_id), random.choice(['P', 'B']),  datetime.datetime.combine(current_date, current_time)))
                 db.commit()
                 print "Recorded!"
                 print "Member:", member_data[0][2]

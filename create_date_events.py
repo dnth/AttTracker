@@ -13,8 +13,8 @@ def daterange(start_date, end_date):
     for n in range(int ((end_date - start_date).days)):
         yield start_date + timedelta(n)
         
-start_date = date(2015, 9, 1)
-end_date = date(2015, 10, 1)
+start_date = date(2015, 1, 1)
+end_date = date(2023, 12, 31)
 for single_date in daterange(start_date, end_date):
     print single_date.strftime("%Y-%m-%d, %A")
     cur.execute("INSERT INTO event_test VALUES(Null, 'Dawn Service:%s', '%s', 'Dawn Service')" % (single_date, single_date) )

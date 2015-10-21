@@ -4,7 +4,8 @@ import matplotlib.pyplot as plt
 
 import numpy as np
 import collections
-from calendar import monthrange
+from calendar import monthrange, calendar
+
 
 def calc_num_all_dept(verbose=False, dbhostip="127.0.0.1"):
     '''
@@ -114,6 +115,7 @@ def calc_att_by_category(month, year, event_type, dbhostip="127.0.0.1"):
     cur.execute("SELECT * FROM member_attendance_summary WHERE event_type='%s' AND month(event_date)=%d AND year(event_date)=%d " % (event_type, month, year) )
     data = cur.fetchall()
     
+    # if there is no data just return all as absent
     if data == ():
         cur.execute("SELECT COUNT(*) FROM event_test WHERE event_type='%s' " % event_type)
         num_events = cur.fetchall()[0]
@@ -125,22 +127,28 @@ def calc_att_by_category(month, year, event_type, dbhostip="127.0.0.1"):
         present_count = 0
         broadcast_count = 0
         absent_count = total_days_counted - (present_count + broadcast_count)
+        import calendar
+        print "### Overall church Attendance (%s) ###" % event_type
+        print "There are %d members in our church and %d events of %s in the month of %s, %d" % (num_members[0], num_events[0], event_type, calendar.month_name[month], year )
+        print "Total days counted for the above criteria is %d" % (total_days_counted)
+        print "Present:", present_count
+        print "Broadcast:", broadcast_count
+        print "Absent:", absent_count
+    
 #         print present_count, broadcast_count, absent_count
         return present_count, broadcast_count, absent_count 
     
-        
-    
+    # if there is data
     present_count = 0
     broadcast_count = 0
-    
     for row in data:
 #         print row[4]
-        if row[4]=='B':
-            present_count+=1
         if row[4]=='P':
+            present_count+=1
+        if row[4]=='B':
             broadcast_count+=1
     
-    cur.execute("SELECT COUNT(*) FROM event_test WHERE event_type='%s' " % event_type)
+    cur.execute("SELECT COUNT(*) FROM event_test WHERE event_type='%s' AND MONTH(event_date)='%s' AND YEAR(event_date)='%s' " % (event_type, month, year) )
     num_events = cur.fetchall()[0]
     cur.execute("SELECT COUNT(*) FROM members_list")
     num_members = cur.fetchall()[0]
@@ -149,12 +157,15 @@ def calc_att_by_category(month, year, event_type, dbhostip="127.0.0.1"):
     total_days_counted = (num_members[0]*num_events[0])
     # count total absentees by subtracting P and B from the total number of events for all members
     absent_count = total_days_counted - (present_count + broadcast_count)
+    import calendar
+    print "### Overall church Attendance (%s) ###" % event_type
+    print "There are %d members in our church and %d events of %s in the month of %s, %d" % (num_members[0], num_events[0], event_type, calendar.month_name[month], year )
+    print "Total days counted for the above criteria is %d" % (total_days_counted)
+    print "Present:", present_count
+    print "Broadcast:", broadcast_count
+    print "Absent:", absent_count
     
-#     print "Total days counted for all members events in month %d is %d" % (month, total_days_counted)
-#     print "Present:", present_count
-#     print "Broadcast:", broadcast_count
-#     print "Absent:", absent_count
-    
+#     print present_count, broadcast_count, absent_count
 #     print present_count, broadcast_count, absent_count
     return present_count, broadcast_count, absent_count
     
@@ -180,6 +191,7 @@ def calc_att_by_category_alldept(month, year, event_type, dbhostip="127.0.0.1"):
     d_absent = collections.OrderedDict()
     
     for dept in dept_list:
+        
         cur.execute("SELECT * FROM member_attendance_summary WHERE event_type='%s' AND month(event_date)=%d AND year(event_date)=%d AND dept='%s' "  % (event_type, month, year, dept) )
         data = cur.fetchall()
         
@@ -204,6 +216,7 @@ def calc_att_by_category_alldept(month, year, event_type, dbhostip="127.0.0.1"):
             d_present['%s'%dept] = present_count
             d_broadcast['%s'%dept] = broadcast_count
             d_absent['%s'%dept] = absent_count
+
         
         present_count = 0
         broadcast_count = 0
@@ -214,7 +227,7 @@ def calc_att_by_category_alldept(month, year, event_type, dbhostip="127.0.0.1"):
             if row[4]=='B':
                 broadcast_count+=1
         
-        cur.execute("SELECT COUNT(*) FROM event_test WHERE event_type='%s' " % event_type)
+        cur.execute("SELECT COUNT(*) FROM event_test WHERE event_type='%s' AND MONTH(event_date)='%s' AND YEAR(event_date)='%s' " % (event_type, month, year) )
         num_events = cur.fetchall()[0]
         cur.execute("SELECT COUNT(*) FROM members_list WHERE dept='%s'" % dept)
         num_members = cur.fetchall()[0]
@@ -236,9 +249,9 @@ def calc_att_by_category_alldept(month, year, event_type, dbhostip="127.0.0.1"):
         d_broadcast['%s'%dept] = broadcast_pcnt
         d_absent['%s'%dept] = absent_pcnt
         
-#     print d_present
-#     print d_broadcast
-#     print d_absent
+#         print d_present
+#         print d_broadcast
+#         print d_absent
     return d_present, d_broadcast, d_absent
     
 
@@ -308,7 +321,9 @@ def plot_service_daily(month, year, event_type, dbhostip="127.0.0.1"):
     return present_list, broadcast_list, days
     
 # plot_dawn_service_daily(month=10, year=2015)
-# calc_att_by_category(year=2016, month=10, event_type="Dawn Service")
+# print calc_att_by_category(year=2015, month=10, event_type="Sunday Service")
+
+# print calc_att_by_category_alldept(month=10, year=2015, event_type="Sunday Service")
 
 # calc_num_all_dept(True)
 

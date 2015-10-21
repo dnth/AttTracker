@@ -29,6 +29,8 @@ from read_graph_tables import calc_att_by_category, calc_att_by_category_alldept
 
 from mpldatacursor import datacursor
 
+import calendar
+
 class AttendanceApp(QtGui.QMainWindow, tabbed_design.Ui_LWCAttendanceTaker):
     def __init__(self):
         # Explaining super is out of the scope of this article
@@ -489,13 +491,13 @@ class AttendanceApp(QtGui.QMainWindow, tabbed_design.Ui_LWCAttendanceTaker):
     def plot_sunday_service(self):
         # Sunday service
         present, broadcast, absent = calc_att_by_category(month=int(self.comboBox_monthselector.currentText()), year=int(self.comboBox_yearselector.currentText()), event_type="Sunday Service")
-
         self.mpl_sundayservicestats.canvas.ax.clear()
         self.mpl_sundayservicestats.canvas.ax.pie([present, broadcast, absent], labels=["Present", "Broadcast", "Absent"],autopct='%1.1f%%',
              colors = ['green', 'yellow', 'red'], startangle=180)    
         self.mpl_sundayservicestats.canvas.ax.axis('equal')
         self.mpl_sundayservicestats.canvas.ax.legend(loc='upper right')
-        self.mpl_sundayservicestats.canvas.ax.set_title("Attendance Distribution [Month:%s Year:%s]" % (int(self.comboBox_monthselector.currentText()), int(self.comboBox_yearselector.currentText())), y=1.05)
+#         self.mpl_sundayservicestats.canvas.ax.set_title("Attendance Distribution [Month:%s Year:%s]" % (int(self.comboBox_monthselector.currentText()), int(self.comboBox_yearselector.currentText())), y=1.05)
+        self.mpl_sundayservicestats.canvas.ax.set_title("Attendance Distribution %s, %d" % (calendar.month_abbr[int(self.comboBox_monthselector.currentText())], int(self.comboBox_yearselector.currentText())), y=1.05)
         self.mpl_sundayservicestats.canvas.draw()
     
         # function returns dict of present, broadcast and absent according to dept
@@ -516,7 +518,8 @@ class AttendanceApp(QtGui.QMainWindow, tabbed_design.Ui_LWCAttendanceTaker):
         self.mpl_sundayservicedeptstats.canvas.ax.set_xlim([0.0, 100.0])
         self.mpl_sundayservicedeptstats.canvas.ax.grid(True)
         self.mpl_sundayservicedeptstats.canvas.ax.legend(loc='upper right')
-        self.mpl_sundayservicedeptstats.canvas.ax.set_title("Dept Attendance Distribution [Month:%s Year:%s]" % (int(self.comboBox_monthselector.currentText()), int(self.comboBox_yearselector.currentText())), y=1.05)
+#         self.mpl_sundayservicedeptstats.canvas.ax.set_title("Dept Attendance Distribution [Month:%s Year:%s]" % (int(self.comboBox_monthselector.currentText()), int(self.comboBox_yearselector.currentText())), y=1.05)
+        self.mpl_sundayservicedeptstats.canvas.ax.set_title("Attendance Distribution %s, %d" % (calendar.month_abbr[int(self.comboBox_monthselector.currentText())], int(self.comboBox_yearselector.currentText())), y=1.05)
         self.mpl_sundayservicedeptstats.canvas.draw()
         
         self.mpl_sundayservice_daily.canvas.ax.clear()
@@ -529,7 +532,8 @@ class AttendanceApp(QtGui.QMainWindow, tabbed_design.Ui_LWCAttendanceTaker):
         self.mpl_sundayservice_daily.canvas.ax.set_xlabel("Day")
         self.mpl_sundayservice_daily.canvas.ax.set_xlim([0,days[-1]+1])
         self.mpl_sundayservice_daily.canvas.ax.legend(loc='lower right')
-        self.mpl_sundayservice_daily.canvas.ax.set_title("Daily Sunday Service Attendance, [Month:%s Year:%s]" % (int(self.comboBox_monthselector.currentText()), int(self.comboBox_yearselector.currentText())))
+#         self.mpl_sundayservice_daily.canvas.ax.set_title("Daily Sunday Service Attendance, [Month:%s Year:%s]" % (int(self.comboBox_monthselector.currentText()), int(self.comboBox_yearselector.currentText())))
+        self.mpl_sundayservice_daily.canvas.ax.set_title("Attendance Distribution %s, %d" % (calendar.month_abbr[int(self.comboBox_monthselector.currentText())], int(self.comboBox_yearselector.currentText())), y=1.05)
         import matplotlib.ticker as plticker
 
         loc = plticker.MultipleLocator(base=1.0) # this locator puts ticks at regular intervals
@@ -547,7 +551,8 @@ class AttendanceApp(QtGui.QMainWindow, tabbed_design.Ui_LWCAttendanceTaker):
              colors = ['green', 'yellow', 'red'], startangle=180)
         self.mpl_weddayservicestats.canvas.ax.axis('equal')
         self.mpl_weddayservicestats.canvas.ax.legend(loc='upper right')
-        self.mpl_weddayservicestats.canvas.ax.set_title("Attendance Distribution [Month:%s Year:%s]" % (int(self.comboBox_monthselector.currentText()), int(self.comboBox_yearselector.currentText())), y=1.05)
+#         self.mpl_weddayservicestats.canvas.ax.set_title("Attendance Distribution [Month:%s Year:%s]" % (int(self.comboBox_monthselector.currentText()), int(self.comboBox_yearselector.currentText())), y=1.05)
+        self.mpl_weddayservicestats.canvas.ax.set_title("Attendance Distribution %s, %d" % (calendar.month_abbr[int(self.comboBox_monthselector.currentText())], int(self.comboBox_yearselector.currentText())), y=1.05)
         self.mpl_weddayservicestats.canvas.draw()
     
         d_present, d_broadcast, d_absent = calc_att_by_category_alldept(month=int(self.comboBox_monthselector.currentText()), year=int(self.comboBox_yearselector.currentText()), event_type="Wednesday Service")
@@ -567,7 +572,8 @@ class AttendanceApp(QtGui.QMainWindow, tabbed_design.Ui_LWCAttendanceTaker):
         self.mpl_weddayservicedeptstats.canvas.ax.set_xlim([0.0, 100.0])
         self.mpl_weddayservicedeptstats.canvas.ax.grid(True)
         self.mpl_weddayservicedeptstats.canvas.ax.legend(loc='upper right')
-        self.mpl_weddayservicedeptstats.canvas.ax.set_title("Dept Attendance Distribution [Month:%s Year:%s]" % (int(self.comboBox_monthselector.currentText()), int(self.comboBox_yearselector.currentText())), y=1.05)
+#         self.mpl_weddayservicedeptstats.canvas.ax.set_title("Dept Attendance Distribution [Month:%s Year:%s]" % (int(self.comboBox_monthselector.currentText()), int(self.comboBox_yearselector.currentText())), y=1.05)
+        self.mpl_weddayservicedeptstats.canvas.ax.set_title("Attendance Distribution %s, %d" % (calendar.month_abbr[int(self.comboBox_monthselector.currentText())], int(self.comboBox_yearselector.currentText())), y=1.05)
         self.mpl_weddayservicedeptstats.canvas.draw() 
         
         self.mpl_wednesdayservice_daily.canvas.ax.clear()
@@ -580,7 +586,8 @@ class AttendanceApp(QtGui.QMainWindow, tabbed_design.Ui_LWCAttendanceTaker):
         self.mpl_wednesdayservice_daily.canvas.ax.set_xlabel("Day")
         self.mpl_wednesdayservice_daily.canvas.ax.set_xlim([0,days[-1]+1])
         self.mpl_wednesdayservice_daily.canvas.ax.legend(loc='lower right')
-        self.mpl_wednesdayservice_daily.canvas.ax.set_title("Daily Wednesday Service Attendance, [Month:%s Year:%s]" % (int(self.comboBox_monthselector.currentText()), int(self.comboBox_yearselector.currentText())))
+#         self.mpl_wednesdayservice_daily.canvas.ax.set_title("Daily Wednesday Service Attendance, [Month:%s Year:%s]" % (int(self.comboBox_monthselector.currentText()), int(self.comboBox_yearselector.currentText())))
+        self.mpl_wednesdayservice_daily.canvas.ax.set_title("Attendance Distribution %s, %d" % (calendar.month_abbr[int(self.comboBox_monthselector.currentText())], int(self.comboBox_yearselector.currentText())), y=1.05)
         import matplotlib.ticker as plticker
 
         loc = plticker.MultipleLocator(base=1.0) # this locator puts ticks at regular intervals
@@ -598,7 +605,8 @@ class AttendanceApp(QtGui.QMainWindow, tabbed_design.Ui_LWCAttendanceTaker):
              colors = ['green', 'yellow', 'red'], startangle=180)
         self.mpl_fridayservicestats.canvas.ax.axis('equal')
         self.mpl_fridayservicestats.canvas.ax.legend(loc='upper right')
-        self.mpl_fridayservicestats.canvas.ax.set_title("Attendance Distribution [Month:%s Year:%s]" % (int(self.comboBox_monthselector.currentText()), int(self.comboBox_yearselector.currentText())), y=1.05)
+#         self.mpl_fridayservicestats.canvas.ax.set_title("Attendance Distribution [Month:%s Year:%s]" % (int(self.comboBox_monthselector.currentText()), int(self.comboBox_yearselector.currentText())), y=1.05)
+        self.mpl_fridayservicestats.canvas.ax.set_title("Attendance Distribution %s, %d" % (calendar.month_abbr[int(self.comboBox_monthselector.currentText())], int(self.comboBox_yearselector.currentText())), y=1.05)
         self.mpl_fridayservicestats.canvas.draw()
     
         d_present, d_broadcast, d_absent = calc_att_by_category_alldept(month=int(self.comboBox_monthselector.currentText()), year=int(self.comboBox_yearselector.currentText()), event_type="Friday Prayer Meeting")
@@ -618,7 +626,8 @@ class AttendanceApp(QtGui.QMainWindow, tabbed_design.Ui_LWCAttendanceTaker):
         self.mpl_fridayservicedeptstats.canvas.ax.set_xlim([0.0, 100.0])
         self.mpl_fridayservicedeptstats.canvas.ax.grid(True)
         self.mpl_fridayservicedeptstats.canvas.ax.legend(loc='upper right')
-        self.mpl_fridayservicedeptstats.canvas.ax.set_title("Dept Attendance Distribution [Month:%s Year:%s]" % (int(self.comboBox_monthselector.currentText()), int(self.comboBox_yearselector.currentText())), y=1.05)
+#         self.mpl_fridayservicedeptstats.canvas.ax.set_title("Dept Attendance Distribution [Month:%s Year:%s]" % (int(self.comboBox_monthselector.currentText()), int(self.comboBox_yearselector.currentText())), y=1.05)
+        self.mpl_fridayservicedeptstats.canvas.ax.set_title("Attendance Distribution %s, %d" % (calendar.month_abbr[int(self.comboBox_monthselector.currentText())], int(self.comboBox_yearselector.currentText())), y=1.05)
         self.mpl_fridayservicedeptstats.canvas.draw()
         
         self.mpl_fridayprayer_daily.canvas.ax.clear()
@@ -631,7 +640,8 @@ class AttendanceApp(QtGui.QMainWindow, tabbed_design.Ui_LWCAttendanceTaker):
         self.mpl_fridayprayer_daily.canvas.ax.set_xlabel("Day")
         self.mpl_fridayprayer_daily.canvas.ax.set_xlim([0,days[-1]+1])
         self.mpl_fridayprayer_daily.canvas.ax.legend(loc='lower right')
-        self.mpl_fridayprayer_daily.canvas.ax.set_title("Daily Friday Prayer Attendance, [Month:%s Year:%s]" % (int(self.comboBox_monthselector.currentText()), int(self.comboBox_yearselector.currentText())))
+#         self.mpl_fridayprayer_daily.canvas.ax.set_title("Daily Friday Prayer Attendance, [Month:%s Year:%s]" % (int(self.comboBox_monthselector.currentText()), int(self.comboBox_yearselector.currentText())))
+        self.mpl_fridayprayer_daily.canvas.ax.set_title("Attendance Distribution %s, %d" % (calendar.month_abbr[int(self.comboBox_monthselector.currentText())], int(self.comboBox_yearselector.currentText())), y=1.05)
         import matplotlib.ticker as plticker
 
         loc = plticker.MultipleLocator(base=1.0) # this locator puts ticks at regular intervals
@@ -649,7 +659,8 @@ class AttendanceApp(QtGui.QMainWindow, tabbed_design.Ui_LWCAttendanceTaker):
              colors = ['green', 'yellow', 'red'], startangle=180)
         self.mpl_dawnservicestats.canvas.ax.axis('equal')
         self.mpl_dawnservicestats.canvas.ax.legend(loc='upper right')
-        self.mpl_dawnservicestats.canvas.ax.set_title("Attendance Distribution, [Month:%s Year:%s]" % (int(self.comboBox_monthselector.currentText()), int(self.comboBox_yearselector.currentText())), y=1.05)
+#         self.mpl_dawnservicestats.canvas.ax.set_title("Attendance Distribution, [Month:%s Year:%s]" % (int(self.comboBox_monthselector.currentText()), int(self.comboBox_yearselector.currentText())), y=1.05)
+        self.mpl_dawnservicestats.canvas.ax.set_title("Attendance Distribution %s, %d" % (calendar.month_abbr[int(self.comboBox_monthselector.currentText())], int(self.comboBox_yearselector.currentText())), y=1.05)
         self.mpl_dawnservicestats.canvas.draw()
         
         d_present, d_broadcast, d_absent = calc_att_by_category_alldept(month=int(self.comboBox_monthselector.currentText()), year=int(self.comboBox_yearselector.currentText()), event_type="Dawn Service")
@@ -669,7 +680,8 @@ class AttendanceApp(QtGui.QMainWindow, tabbed_design.Ui_LWCAttendanceTaker):
         self.mpl_dawnservicedeptstats.canvas.ax.set_ylabel("Dept")
         self.mpl_dawnservicedeptstats.canvas.ax.set_xlabel("Percentage (%)")
         self.mpl_dawnservicedeptstats.canvas.ax.legend(loc='upper right')
-        self.mpl_dawnservicedeptstats.canvas.ax.set_title("Dept Attendance Distribution, [Month:%s Year:%s]" % (int(self.comboBox_monthselector.currentText()), int(self.comboBox_yearselector.currentText())) , y=1.05)
+#         self.mpl_dawnservicedeptstats.canvas.ax.set_title("Dept Attendance Distribution, [Month:%s Year:%s]" % (int(self.comboBox_monthselector.currentText()), int(self.comboBox_yearselector.currentText())) , y=1.05)
+        self.mpl_dawnservicedeptstats.canvas.ax.set_title("Attendance Distribution %s, %d" % (calendar.month_abbr[int(self.comboBox_monthselector.currentText())], int(self.comboBox_yearselector.currentText())), y=1.05)
         self.mpl_dawnservicedeptstats.canvas.draw()
         
         
@@ -683,7 +695,8 @@ class AttendanceApp(QtGui.QMainWindow, tabbed_design.Ui_LWCAttendanceTaker):
         self.mpl_dawnservice_daily.canvas.ax.set_xlabel("Day")
         self.mpl_dawnservice_daily.canvas.ax.set_xlim([0,days[-1]+1])
         self.mpl_dawnservice_daily.canvas.ax.legend(loc='lower right')
-        self.mpl_dawnservice_daily.canvas.ax.set_title("Daily Dawn Service Attendance, [Month:%s Year:%s]" % (int(self.comboBox_monthselector.currentText()), int(self.comboBox_yearselector.currentText())))
+#         self.mpl_dawnservice_daily.canvas.ax.set_title("Daily Dawn Service Attendance, [Month:%s Year:%s]" % (int(self.comboBox_monthselector.currentText()), int(self.comboBox_yearselector.currentText())))
+        self.mpl_dawnservice_daily.canvas.ax.set_title("Attendance Distribution %s, %d" % (calendar.month_abbr[int(self.comboBox_monthselector.currentText())], int(self.comboBox_yearselector.currentText())), y=1.05)
         import matplotlib.ticker as plticker
 
         loc = plticker.MultipleLocator(base=1.0) # this locator puts ticks at regular intervals
