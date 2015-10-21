@@ -74,7 +74,9 @@ class AttendanceApp(QtGui.QMainWindow, tabbed_design.Ui_LWCAttendanceTaker):
         # attendance marking stuff
         self.pushButton_submit.clicked.connect(self.submit_attendance)
         self.pushButton_delete.clicked.connect(self.delete_attendance)
-        self.pushButton_reload_attlist.clicked.connect(self.load_admin_name_status_combobox)
+#         self.pushButton_reload_attlist.clicked.connect(self.load_admin_name_status_combobox)
+        
+        self.comboBox_admintab_dept.currentIndexChanged.connect(self.load_admin_name_status_combobox)
         
         # table view stuffs
         self.pushButton_loadmemberdetails.clicked.connect(self.loadMembersTableView)
@@ -100,6 +102,11 @@ class AttendanceApp(QtGui.QMainWindow, tabbed_design.Ui_LWCAttendanceTaker):
         
         # add new members stuff
         self.pushButton_addmember.clicked.connect(self.add_new_member)
+        
+        # personal profile stuff
+        self.comboBox_profiledept.currentIndexChanged.connect(self.load_profile_namecombobox)
+    
+    
     
     def add_new_member(self):
         db = mdb.connect(charset='utf8', host=str(self.databaseHostLineEdit.text()), user="root", passwd="root", db="lwc_members")
@@ -144,6 +151,8 @@ class AttendanceApp(QtGui.QMainWindow, tabbed_design.Ui_LWCAttendanceTaker):
                 self.load_all_deptcombobox()
                 self.load_admin_eventcombobox()
                 self.load_admin_name_status_combobox()
+                self.load_profile_deptcombobox()
+                self.load_profile_namecombobox()
                  
                 self.comboBox_monthselector.clear()
                 self.comboBox_yearselector.clear()
@@ -180,16 +189,35 @@ class AttendanceApp(QtGui.QMainWindow, tabbed_design.Ui_LWCAttendanceTaker):
             self.tableWidget.setItem(row,6,QtGui.QTableWidgetItem(self.tableWidget.cellWidget(row, 6).currentText()))
             
         for row in range(all_rows):
+            
+            rfid_num = self.tableWidget.item(row, 1).text()
+            chi_name = self.tableWidget.item(row, 2).text()
+            eng_name = self.tableWidget.item(row, 3).text()
+            dept = self.tableWidget.item(row, 4).text()
+            gender = self.tableWidget.item(row, 5).text()
+            status = self.tableWidget.item(row, 6).text()
+            dob = self.tableWidget.item(row, 7).text()
+            passing_date = self.tableWidget.item(row, 8).text()
+            contact_num = self.tableWidget.item(row, 9).text()
+            id = int(self.tableWidget.item(row, 0).text())
+                        
             cur.execute("UPDATE members_list SET rfid_num='%s', chi_name='%s', eng_name='%s', dept='%s', gender='%s', status='%s', dob='%s', passing_date='%s', contact_num='%s' WHERE id=%d " 
-                        % (self.tableWidget.item(row, 1).text(), self.tableWidget.item(row, 2).text(), self.tableWidget.item(row, 3).text(),
-                            self.tableWidget.item(row, 4).text(), self.tableWidget.item(row, 5).text(), self.tableWidget.item(row, 6).text(),
-                            self.tableWidget.item(row, 7).text(),self.tableWidget.item(row, 8).text(),self.tableWidget.item(row, 9).text(),
-                            int(self.tableWidget.item(row, 0).text()) ) )
+            % (rfid_num,chi_name,eng_name,dept,gender,status,dob,passing_date,contact_num,id))
+            
+#             cur.execute("UPDATE members_list SET rfid_num='%s', chi_name='%s', eng_name='%s', dept='%s', gender='%s', status='%s', dob='%s', passing_date='%s', contact_num='%s' WHERE id=%d " 
+#                         % (self.tableWidget.item(row, 1).text(), self.tableWidget.item(row, 2).text(), self.tableWidget.item(row, 3).text(),
+#                             self.tableWidget.item(row, 4).text(), self.tableWidget.item(row, 5).text(), self.tableWidget.item(row, 6).text(),
+#                             self.tableWidget.item(row, 7).text(),self.tableWidget.item(row, 8).text(),self.tableWidget.item(row, 9).text(),
+#                             int(self.tableWidget.item(row, 0).text()) ) )
             db.commit()
+            db.close()
             self.statusbar.setStyleSheet("QStatusBar{padding-left:8px;background:rgba(0,255,0,255);color:black;font-weight:bold;}")
             self.statusbar.showMessage("Changes committed!")
+            
+            
 #             print self.tableWidget.item(row, 1).text().toUtf8(), self.tableWidget.item(row, 2).text().toUtf8()
-        
+
+####################################################################################################################################################    
     def gotonextpage(self, widget):
         current_index = widget.currentIndex()
         current_index+=1
@@ -296,7 +324,8 @@ class AttendanceApp(QtGui.QMainWindow, tabbed_design.Ui_LWCAttendanceTaker):
             self.tableWidget.setCellWidget(row, 5, self.table_combobox_gender)
             self.table_combobox_status.setCurrentIndex(status_list.index(self.tableWidget.item(row, 6).text())) 
             self.tableWidget.setCellWidget(row, 6, self.table_combobox_status)
-            
+        
+        db.close()
 
     def load_all_deptcombobox(self):
         db = mdb.connect(charset='utf8', host=str(self.databaseHostLineEdit.text()), user="root", passwd="root", db="lwc_members")
@@ -311,11 +340,14 @@ class AttendanceApp(QtGui.QMainWindow, tabbed_design.Ui_LWCAttendanceTaker):
             self.comboBox_viewtabledept.addItems(dept)
         self.comboBox_viewtabledept.addItems(["ALL DEPT"])
         
-        # load combobox in the add new members tab as well 
+        # load combobox in the add new members tab and personal profile as well 
+        self.comboBox_addmemberdept.clear()
         for dept in deptlist:
             self.comboBox_addmemberdept.addItems(dept)
+            
         
         self.comboBox_addmembergender.addItems(["F", "M"])
+        db.close()
         
     def load_admin_eventcombobox(self):
         db = mdb.connect(charset='utf8', host=str(self.databaseHostLineEdit.text()), user="root", passwd="root", db="lwc_members")
@@ -324,6 +356,7 @@ class AttendanceApp(QtGui.QMainWindow, tabbed_design.Ui_LWCAttendanceTaker):
         eventlist = cur.fetchall()
         for event in eventlist:
             self.comboBox_admintab_event.addItems(event)
+        db.close()
             
     def load_admin_name_status_combobox(self):
         db = mdb.connect(charset='utf8', host=str(self.databaseHostLineEdit.text()), user="root", passwd="root", db="lwc_members")
@@ -335,8 +368,35 @@ class AttendanceApp(QtGui.QMainWindow, tabbed_design.Ui_LWCAttendanceTaker):
         namelist = cur.fetchall()
         for name in namelist:
             self.comboBox_admintab_name.addItems(name)
-        
         self.comboBox_admintab_status.addItems(["P", "B"])
+        
+        db.close()
+         
+        
+# PERSONAL PROFILE STUFF #
+    def load_profile_deptcombobox(self):
+        db = mdb.connect(charset='utf8', host=str(self.databaseHostLineEdit.text()), user="root", passwd="root", db="lwc_members")
+        cur = db.cursor()        
+              
+        self.comboBox_profiledept.clear()
+        cur.execute("SELECT dept FROM members_list GROUP by dept")
+        deptlist = cur.fetchall()
+        for dept in deptlist:
+            self.comboBox_profiledept.addItems(dept)
+            
+        db.close()
+        
+    def load_profile_namecombobox(self):
+        db = mdb.connect(charset='utf8', host=str(self.databaseHostLineEdit.text()), user="root", passwd="root", db="lwc_members")
+        cur = db.cursor()        
+        self.comboBox_profilename.clear()
+        cur.execute("SELECT chi_name FROM members_list WHERE dept='%s' " % self.comboBox_profiledept.currentText())
+        namelist = cur.fetchall()
+        for name in namelist:
+            self.comboBox_profilename.addItems(name)
+        db.close()
+        
+#####################
         
     def submit_attendance(self):
 #         self.label_admintab_dynamic_remarks.setStyleSheet("color: none")

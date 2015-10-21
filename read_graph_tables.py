@@ -88,6 +88,8 @@ def calc_num_all_dept(verbose=False, dbhostip="127.0.0.1"):
     d['MWF'] = MWF_count
     d['GL'] = GL_count
     d['OS'] = OS_count    
+    
+    db.close()
     return d
 
 def plot_dept_stats():
@@ -167,6 +169,7 @@ def calc_att_by_category(month, year, event_type, dbhostip="127.0.0.1"):
     
 #     print present_count, broadcast_count, absent_count
 #     print present_count, broadcast_count, absent_count
+    db.close()
     return present_count, broadcast_count, absent_count
     
      
@@ -252,6 +255,7 @@ def calc_att_by_category_alldept(month, year, event_type, dbhostip="127.0.0.1"):
 #         print d_present
 #         print d_broadcast
 #         print d_absent
+    db.close()
     return d_present, d_broadcast, d_absent
     
 
@@ -317,7 +321,7 @@ def plot_service_daily(month, year, event_type, dbhostip="127.0.0.1"):
     
 #     print present_list
 #     print broadcast_list
-    
+    db.close()
     return present_list, broadcast_list, days
     
 # plot_dawn_service_daily(month=10, year=2015)
