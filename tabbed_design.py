@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file 'tabbed.ui'
 #
-# Created: Wed Oct 21 16:42:33 2015
+# Created: Wed Oct 21 17:15:46 2015
 #      by: PyQt4 UI code generator 4.11.3
 #
 # WARNING! All changes made in this file will be lost!
@@ -860,9 +860,6 @@ class Ui_LWCAttendanceTaker(object):
         self.englishNameLabel_2.setFont(font)
         self.englishNameLabel_2.setObjectName(_fromUtf8("englishNameLabel_2"))
         self.formLayout_7.setWidget(1, QtGui.QFormLayout.LabelRole, self.englishNameLabel_2)
-        self.englishNameLineEdit_2 = QtGui.QLineEdit(self.formLayoutWidget_3)
-        self.englishNameLineEdit_2.setObjectName(_fromUtf8("englishNameLineEdit_2"))
-        self.formLayout_7.setWidget(1, QtGui.QFormLayout.FieldRole, self.englishNameLineEdit_2)
         self.genderLabel_2 = QtGui.QLabel(self.formLayoutWidget_3)
         font = QtGui.QFont()
         font.setBold(True)
@@ -884,9 +881,9 @@ class Ui_LWCAttendanceTaker(object):
         self.label_8.setFont(font)
         self.label_8.setObjectName(_fromUtf8("label_8"))
         self.formLayout_7.setWidget(4, QtGui.QFormLayout.LabelRole, self.label_8)
-        self.lineEdit_2 = QtGui.QLineEdit(self.formLayoutWidget_3)
-        self.lineEdit_2.setObjectName(_fromUtf8("lineEdit_2"))
-        self.formLayout_7.setWidget(4, QtGui.QFormLayout.FieldRole, self.lineEdit_2)
+        self.lineEdit_profileconnum = QtGui.QLineEdit(self.formLayoutWidget_3)
+        self.lineEdit_profileconnum.setObjectName(_fromUtf8("lineEdit_profileconnum"))
+        self.formLayout_7.setWidget(4, QtGui.QFormLayout.FieldRole, self.lineEdit_profileconnum)
         self.label_9 = QtGui.QLabel(self.formLayoutWidget_3)
         font = QtGui.QFont()
         font.setBold(True)
@@ -904,21 +901,24 @@ class Ui_LWCAttendanceTaker(object):
         self.label_10.setWordWrap(True)
         self.label_10.setObjectName(_fromUtf8("label_10"))
         self.formLayout_7.setWidget(6, QtGui.QFormLayout.LabelRole, self.label_10)
-        self.englishNameLineEdit_3 = QtGui.QLineEdit(self.formLayoutWidget_3)
-        self.englishNameLineEdit_3.setObjectName(_fromUtf8("englishNameLineEdit_3"))
-        self.formLayout_7.setWidget(5, QtGui.QFormLayout.FieldRole, self.englishNameLineEdit_3)
-        self.lineEdit_3 = QtGui.QLineEdit(self.formLayoutWidget_3)
-        self.lineEdit_3.setObjectName(_fromUtf8("lineEdit_3"))
-        self.formLayout_7.setWidget(6, QtGui.QFormLayout.FieldRole, self.lineEdit_3)
-        self.lineEdit_4 = QtGui.QLineEdit(self.formLayoutWidget_3)
-        self.lineEdit_4.setObjectName(_fromUtf8("lineEdit_4"))
-        self.formLayout_7.setWidget(2, QtGui.QFormLayout.FieldRole, self.lineEdit_4)
+        self.lineEdit_profiledob = QtGui.QLineEdit(self.formLayoutWidget_3)
+        self.lineEdit_profiledob.setObjectName(_fromUtf8("lineEdit_profiledob"))
+        self.formLayout_7.setWidget(5, QtGui.QFormLayout.FieldRole, self.lineEdit_profiledob)
+        self.lineEdit_profilepassing = QtGui.QLineEdit(self.formLayoutWidget_3)
+        self.lineEdit_profilepassing.setObjectName(_fromUtf8("lineEdit_profilepassing"))
+        self.formLayout_7.setWidget(6, QtGui.QFormLayout.FieldRole, self.lineEdit_profilepassing)
+        self.lineEdit_profilegender = QtGui.QLineEdit(self.formLayoutWidget_3)
+        self.lineEdit_profilegender.setObjectName(_fromUtf8("lineEdit_profilegender"))
+        self.formLayout_7.setWidget(2, QtGui.QFormLayout.FieldRole, self.lineEdit_profilegender)
         self.comboBox_profilename = QtGui.QComboBox(self.formLayoutWidget_3)
         self.comboBox_profilename.setObjectName(_fromUtf8("comboBox_profilename"))
         self.formLayout_7.setWidget(0, QtGui.QFormLayout.FieldRole, self.comboBox_profilename)
         self.comboBox_profiledept = QtGui.QComboBox(self.formLayoutWidget_3)
         self.comboBox_profiledept.setObjectName(_fromUtf8("comboBox_profiledept"))
         self.formLayout_7.setWidget(3, QtGui.QFormLayout.FieldRole, self.comboBox_profiledept)
+        self.lineEdit_profileenglishname = QtGui.QLineEdit(self.formLayoutWidget_3)
+        self.lineEdit_profileenglishname.setObjectName(_fromUtf8("lineEdit_profileenglishname"))
+        self.formLayout_7.setWidget(1, QtGui.QFormLayout.FieldRole, self.lineEdit_profileenglishname)
         self.label_11 = QtGui.QLabel(self.groupBox_7)
         self.label_11.setGeometry(QtCore.QRect(340, 20, 221, 231))
         self.label_11.setText(_fromUtf8(""))
@@ -952,13 +952,13 @@ class Ui_LWCAttendanceTaker(object):
         self.menubar.addAction(self.menuFlie.menuAction())
 
         self.retranslateUi(LWCAttendanceTaker)
-        self.tab_widget.setCurrentIndex(1)
+        self.tab_widget.setCurrentIndex(3)
         self.tabWidget_statistics.setCurrentIndex(0)
         self.stackedWidget_ss.setCurrentIndex(0)
         self.stackedWidget_ws.setCurrentIndex(0)
         self.stackedWidget_fpm.setCurrentIndex(0)
         self.stackedWidget_ds.setCurrentIndex(0)
-        self.tabWidget_adminmarking.setCurrentIndex(0)
+        self.tabWidget_adminmarking.setCurrentIndex(4)
         QtCore.QMetaObject.connectSlotsByName(LWCAttendanceTaker)
 
     def retranslateUi(self, LWCAttendanceTaker):

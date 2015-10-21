@@ -105,6 +105,7 @@ class AttendanceApp(QtGui.QMainWindow, tabbed_design.Ui_LWCAttendanceTaker):
         
         # personal profile stuff
         self.comboBox_profiledept.currentIndexChanged.connect(self.load_profile_namecombobox)
+        self.comboBox_profilename.currentIndexChanged.connect(self.load_profile)
     
     
     
@@ -374,6 +375,7 @@ class AttendanceApp(QtGui.QMainWindow, tabbed_design.Ui_LWCAttendanceTaker):
          
         
 # PERSONAL PROFILE STUFF #
+####################################################################################################################################################    
     def load_profile_deptcombobox(self):
         db = mdb.connect(charset='utf8', host=str(self.databaseHostLineEdit.text()), user="root", passwd="root", db="lwc_members")
         cur = db.cursor()        
@@ -396,7 +398,56 @@ class AttendanceApp(QtGui.QMainWindow, tabbed_design.Ui_LWCAttendanceTaker):
             self.comboBox_profilename.addItems(name)
         db.close()
         
-#####################
+        self.load_profile()
+        
+    def load_profile(self):  
+        db = mdb.connect(charset='utf8', host=str(self.databaseHostLineEdit.text()), user="root", passwd="root", db="lwc_members")
+        cur = db.cursor()
+        
+        cur.execute("SELECT * FROM members_list WHERE chi_name='%s' " % (self.comboBox_profilename.currentText()))
+        member_data = cur.fetchall()
+        
+        print member_data
+        
+        if member_data is not ():
+            
+            if member_data[0][3] is None:
+                self.lineEdit_profileenglishname.setText("Null")
+            else:    
+                self.lineEdit_profileenglishname.setText(member_data[0][3])
+            self.lineEdit_profileenglishname.setDisabled(True)
+            
+            
+            self.lineEdit_profilegender.setText(member_data[0][5])
+            self.lineEdit_profilegender.setDisabled(True)
+            
+            if member_data[0][7] is None:
+                self.lineEdit_profiledob.setText("Null")
+            else: 
+                self.lineEdit_profiledob.setText(member_data[0][7])
+            self.lineEdit_profiledob.setDisabled(True)
+            
+            if member_data[0][8] is None:
+                self.lineEdit_profilepassing.setText("Null")
+            else:
+                self.lineEdit_profilepassing.setText(member_data[0][8])
+            self.lineEdit_profilepassing.setDisabled(True)
+            
+            if member_data[0][9] is None:
+                self.lineEdit_profileconnum.setText("Null")
+            else:
+                self.lineEdit_profileconnum.setText(member_data[0][9])
+            self.lineEdit_profileconnum.setDisabled(True)
+            
+                  
+            if os.path.exists("pics/%s.jpg" % self.comboBox_profilename.currentText()):
+                        self.label_personalpic.setPixmap(QtGui.QPixmap("pics/%s.jpg" % self.comboBox_profilename.currentText()).scaledToHeight(200) )
+            else:
+                self.label_personalpic.setPixmap(QtGui.QPixmap("unknown_profile.png" ).scaledToHeight(160))
+        
+        
+####################################################################################################################################################    
+
         
     def submit_attendance(self):
 #         self.label_admintab_dynamic_remarks.setStyleSheet("color: none")

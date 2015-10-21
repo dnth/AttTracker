@@ -55,7 +55,7 @@
     <item row="1" column="0">
      <widget class="QTabWidget" name="tab_widget">
       <property name="currentIndex">
-       <number>1</number>
+       <number>3</number>
       </property>
       <widget class="QWidget" name="tab_6">
        <attribute name="title">
@@ -984,7 +984,7 @@
         <item row="0" column="0">
          <widget class="QTabWidget" name="tabWidget_adminmarking">
           <property name="currentIndex">
-           <number>0</number>
+           <number>4</number>
           </property>
           <property name="movable">
            <bool>false</bool>
@@ -1514,9 +1514,6 @@
                 </property>
                </widget>
               </item>
-              <item row="1" column="1">
-               <widget class="QLineEdit" name="englishNameLineEdit_2"/>
-              </item>
               <item row="2" column="0">
                <widget class="QLabel" name="genderLabel_2">
                 <property name="font">
@@ -1557,7 +1554,7 @@
                </widget>
               </item>
               <item row="4" column="1">
-               <widget class="QLineEdit" name="lineEdit_2"/>
+               <widget class="QLineEdit" name="lineEdit_profileconnum"/>
               </item>
               <item row="5" column="0">
                <widget class="QLabel" name="label_9">
@@ -1595,19 +1592,22 @@
                </widget>
               </item>
               <item row="5" column="1">
-               <widget class="QLineEdit" name="englishNameLineEdit_3"/>
+               <widget class="QLineEdit" name="lineEdit_profiledob"/>
               </item>
               <item row="6" column="1">
-               <widget class="QLineEdit" name="lineEdit_3"/>
+               <widget class="QLineEdit" name="lineEdit_profilepassing"/>
               </item>
               <item row="2" column="1">
-               <widget class="QLineEdit" name="lineEdit_4"/>
+               <widget class="QLineEdit" name="lineEdit_profilegender"/>
               </item>
               <item row="0" column="1">
                <widget class="QComboBox" name="comboBox_profilename"/>
               </item>
               <item row="3" column="1">
                <widget class="QComboBox" name="comboBox_profiledept"/>
+              </item>
+              <item row="1" column="1">
+               <widget class="QLineEdit" name="lineEdit_profileenglishname"/>
               </item>
              </layout>
             </widget>
