@@ -1,37 +1,19 @@
-
 from PyQt4 import QtGui, QtCore
 import sys 
 import serial.tools.list_ports
 from PyQt4 import QtCore as core
-
 import MySQLdb as mdb
 import datetime
-# import serial
 from datetime import date, time
 from time import strftime
-
 import tabbed_design
-# import urllib
 import os
-
 from importserial import load_serial_ports
-# from time import sleep
-
-# from matplotlib.backends.backend_qt4agg import FigureCanvasQTAgg as FigureCanvas
-# from matplotlib.backends.backend_qt4agg import NavigationToolbar2QTAgg as NavigationToolbar
-
-# from matplotlib.figure import Figure
-# import matplotlib.pyplot as plt
-
-# import matplotlib.image as mpimg
-
 from read_graph_tables import calc_att_by_category, calc_att_by_category_alldept, calc_num_all_dept, plot_service_daily
-
 from mpldatacursor import datacursor
-
 import calendar
 
-class AttendanceApp(QtGui.QMainWindow, tabbed_design.Ui_LWCAttendanceTaker):
+class AttTracker(QtGui.QMainWindow, tabbed_design.Ui_LWCAttendanceTaker):
     def __init__(self):
         # Explaining super is out of the scope of this article
         # So please google it if you're not familar with it
@@ -113,13 +95,16 @@ class AttendanceApp(QtGui.QMainWindow, tabbed_design.Ui_LWCAttendanceTaker):
         db = mdb.connect(charset='utf8', host=str(self.databaseHostLineEdit.text()), user="root", passwd="root", db="lwc_members")
         cur = db.cursor()
         
-        cur.execute("INSERT INTO members_list (chi_name, eng_name, dept, gender, status, dob, passing_date, contact_num) VALUES ('%s', '%s', '%s', '%s', 'Active', '%s', '%s', '%s') " 
+        cur.execute("INSERT INTO members_list (chi_name, eng_name, dept, gender, membership_status, dob, passing_date, contact_num) VALUES ('%s', '%s', '%s', '%s', 'Active', '%s', '%s', '%s') " 
                     % (self.nameLineEdit.text(), self.englishNameLineEdit.text(), self.comboBox_addmemberdept.currentText(), self.comboBox_addmembergender.currentText(), self.calendarWidget_newmember_dob.selectedDate().toString("yyyy-MM-dd"), self.calendarWidget_newmember_passing.selectedDate().toString("yyyy-MM-dd"), self.contactNum_lineEdit.text() ))
         db.commit()
         
         self.statusbar.setStyleSheet("QStatusBar{padding-left:8px;background:rgba(0,255,0,255);color:black;font-weight:bold;}")
         self.statusbar.showMessage("New member added!")
-    
+
+
+####################################################################################################################################################    
+
     def connecttohome(self):
         self.databaseHostLineEdit.setText("127.0.0.1")
         self.pushButton_connecttohome.setDisabled(True)
@@ -167,8 +152,8 @@ class AttendanceApp(QtGui.QMainWindow, tabbed_design.Ui_LWCAttendanceTaker):
                 index_year = self.comboBox_yearselector.findText(datetime.datetime.date(datetime.datetime.now()).strftime("%Y"), QtCore.Qt.MatchFixedString)
                 self.comboBox_yearselector.setCurrentIndex(index_year)
                 
-                self.plot_all_service()
-                self.plot_dept_stats()
+#                 self.plot_all_service()
+#                 self.plot_dept_stats()
                 
                 self.timer = core.QTimer(self)
                 self.timer.timeout.connect(self.v2_scan_id)
@@ -176,59 +161,7 @@ class AttendanceApp(QtGui.QMainWindow, tabbed_design.Ui_LWCAttendanceTaker):
         except:
             self.statusbar.setStyleSheet("QStatusBar{padding-left:8px;background:rgba(255,0,0,255);color:black;font-weight:bold;}")
             self.statusbar.showMessage("Database cannot be reached, please re-enter")
-        
-    def commit_member_details(self):
-        db = mdb.connect(charset='utf8', host=str(self.databaseHostLineEdit.text()), user="root", passwd="root", db="lwc_members")
-        cur = db.cursor()
-        cur.execute("SELECT * FROM members_list GROUP by id")
-        all_rows = self.tableWidget.rowCount()
-        
-        # select the current text in combo box for commit
-        for row in range(all_rows):
-            self.tableWidget.setItem(row,4,QtGui.QTableWidgetItem(self.tableWidget.cellWidget(row, 4).currentText()))
-            self.tableWidget.setItem(row,5,QtGui.QTableWidgetItem(self.tableWidget.cellWidget(row, 5).currentText()))
-            self.tableWidget.setItem(row,6,QtGui.QTableWidgetItem(self.tableWidget.cellWidget(row, 6).currentText()))
-            
-        for row in range(all_rows):
-            
-            rfid_num = self.tableWidget.item(row, 1).text()
-            chi_name = self.tableWidget.item(row, 2).text()
-            eng_name = self.tableWidget.item(row, 3).text()
-            dept = self.tableWidget.item(row, 4).text()
-            gender = self.tableWidget.item(row, 5).text()
-            status = self.tableWidget.item(row, 6).text()
-            dob = self.tableWidget.item(row, 7).text()
-            passing_date = self.tableWidget.item(row, 8).text()
-            contact_num = self.tableWidget.item(row, 9).text()
-            id = int(self.tableWidget.item(row, 0).text())
-                        
-            cur.execute("UPDATE members_list SET rfid_num='%s', chi_name='%s', eng_name='%s', dept='%s', gender='%s', status='%s', dob='%s', passing_date='%s', contact_num='%s' WHERE id=%d " 
-            % (rfid_num,chi_name,eng_name,dept,gender,status,dob,passing_date,contact_num,id))
-            
-#             cur.execute("UPDATE members_list SET rfid_num='%s', chi_name='%s', eng_name='%s', dept='%s', gender='%s', status='%s', dob='%s', passing_date='%s', contact_num='%s' WHERE id=%d " 
-#                         % (self.tableWidget.item(row, 1).text(), self.tableWidget.item(row, 2).text(), self.tableWidget.item(row, 3).text(),
-#                             self.tableWidget.item(row, 4).text(), self.tableWidget.item(row, 5).text(), self.tableWidget.item(row, 6).text(),
-#                             self.tableWidget.item(row, 7).text(),self.tableWidget.item(row, 8).text(),self.tableWidget.item(row, 9).text(),
-#                             int(self.tableWidget.item(row, 0).text()) ) )
-            db.commit()
-            db.close()
-            self.statusbar.setStyleSheet("QStatusBar{padding-left:8px;background:rgba(0,255,0,255);color:black;font-weight:bold;}")
-            self.statusbar.showMessage("Changes committed!")
-            
-            
-#             print self.tableWidget.item(row, 1).text().toUtf8(), self.tableWidget.item(row, 2).text().toUtf8()
 
-####################################################################################################################################################    
-    def gotonextpage(self, widget):
-        current_index = widget.currentIndex()
-        current_index+=1
-        widget.setCurrentIndex(current_index)
-        
-    def gotoprevpage(self, widget):
-        current_index = widget.currentIndex()
-        current_index-=1
-        widget.setCurrentIndex(current_index)
-        
 ####################################################################################################################################################    
     def loadMembersTableView(self):
         db = mdb.connect(charset='utf8', host=str(self.databaseHostLineEdit.text()), user="root", passwd="root", db="lwc_members")
@@ -327,6 +260,52 @@ class AttendanceApp(QtGui.QMainWindow, tabbed_design.Ui_LWCAttendanceTaker):
             self.tableWidget.setCellWidget(row, 6, self.table_combobox_status)
         
         db.close()
+        
+    def commit_member_details(self):
+        db = mdb.connect(charset='utf8', host=str(self.databaseHostLineEdit.text()), user="root", passwd="root", db="lwc_members")
+        cur = db.cursor()
+        cur.execute("SELECT * FROM members_list GROUP by id")
+        all_rows = self.tableWidget.rowCount()
+        
+        # select the current text in combo box for commit
+        for row in range(all_rows):
+            self.tableWidget.setItem(row,4,QtGui.QTableWidgetItem(self.tableWidget.cellWidget(row, 4).currentText()))
+            self.tableWidget.setItem(row,5,QtGui.QTableWidgetItem(self.tableWidget.cellWidget(row, 5).currentText()))
+            self.tableWidget.setItem(row,6,QtGui.QTableWidgetItem(self.tableWidget.cellWidget(row, 6).currentText()))
+            
+        for row in range(all_rows):
+            
+            rfid_num = self.tableWidget.item(row, 1).text()
+            chi_name = self.tableWidget.item(row, 2).text()
+            eng_name = self.tableWidget.item(row, 3).text()
+            dept = self.tableWidget.item(row, 4).text()
+            gender = self.tableWidget.item(row, 5).text()
+            status = self.tableWidget.item(row, 6).text()
+            dob = self.tableWidget.item(row, 7).text()
+            passing_date = self.tableWidget.item(row, 8).text()
+            contact_num = self.tableWidget.item(row, 9).text()
+            idnum = int(self.tableWidget.item(row, 0).text())
+                        
+            cur.execute("UPDATE members_list SET rfid_num='%s', chi_name='%s', eng_name='%s', dept='%s', gender='%s', status='%s', dob='%s', passing_date='%s', contact_num='%s' WHERE id=%d " 
+            % (rfid_num,chi_name,eng_name,dept,gender,status,dob,passing_date,contact_num,idnum))
+            
+#             cur.execute("UPDATE members_list SET rfid_num='%s', chi_name='%s', eng_name='%s', dept='%s', gender='%s', status='%s', dob='%s', passing_date='%s', contact_num='%s' WHERE id=%d " 
+#                         % (self.tableWidget.item(row, 1).text(), self.tableWidget.item(row, 2).text(), self.tableWidget.item(row, 3).text(),
+#                             self.tableWidget.item(row, 4).text(), self.tableWidget.item(row, 5).text(), self.tableWidget.item(row, 6).text(),
+#                             self.tableWidget.item(row, 7).text(),self.tableWidget.item(row, 8).text(),self.tableWidget.item(row, 9).text(),
+#                             int(self.tableWidget.item(row, 0).text()) ) )
+            db.commit()
+            db.close()
+            self.statusbar.setStyleSheet("QStatusBar{padding-left:8px;background:rgba(0,255,0,255);color:black;font-weight:bold;}")
+            self.statusbar.showMessage("Changes committed!")
+            
+            
+#             print self.tableWidget.item(row, 1).text().toUtf8(), self.tableWidget.item(row, 2).text().toUtf8()
+
+
+        
+####################################################################################################################################################    
+    
 
     def load_all_deptcombobox(self):
         db = mdb.connect(charset='utf8', host=str(self.databaseHostLineEdit.text()), user="root", passwd="root", db="lwc_members")
@@ -591,7 +570,15 @@ class AttendanceApp(QtGui.QMainWindow, tabbed_design.Ui_LWCAttendanceTaker):
             
     
 ####################################################################################################################################################            
-    
+    def gotonextpage(self, widget):
+        current_index = widget.currentIndex()
+        current_index+=1
+        widget.setCurrentIndex(current_index)
+        
+    def gotoprevpage(self, widget):
+        current_index = widget.currentIndex()
+        current_index-=1
+        widget.setCurrentIndex(current_index)
     
     def plot_all_service(self):
         self.plot_sunday_service()
@@ -974,7 +961,7 @@ class AttendanceApp(QtGui.QMainWindow, tabbed_design.Ui_LWCAttendanceTaker):
 
 def main():
     app = QtGui.QApplication(sys.argv)  # A new instance of QApplication
-    form = AttendanceApp()                 # We set the form to be our ExampleApp (design)
+    form = AttTracker()                 # We set the form to be our ExampleApp (design)
     form.show()                         # Show the form
     app.exec_()                         # and execute the app
 

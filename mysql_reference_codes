@@ -29,6 +29,15 @@ SUM(STATUS =  'B' ) AS Broadcast
 FROM attendance_summary
 GROUP BY id
 
+# personal attendance count for october for sunday service
+SELECT rfid_num, chi_name, dept,
+SUM(STATUS =  'P' ) AS Present, 
+SUM(STATUS =  'A' ) AS Absent, 
+SUM(STATUS =  'B' ) AS Broadcast
+FROM member_attendance_summary
+WHERE month(event_date)=10 AND event_type = 'Sunday Service'
+GROUP BY id
+
 # for event attendance count
 CREATE VIEW event_att_count AS
 SELECT event_id,event_date, event_name,

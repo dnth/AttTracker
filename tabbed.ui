@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>1050</width>
-    <height>644</height>
+    <height>776</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -55,7 +55,7 @@
     <item row="1" column="0">
      <widget class="QTabWidget" name="tab_widget">
       <property name="currentIndex">
-       <number>3</number>
+       <number>0</number>
       </property>
       <widget class="QWidget" name="tab_6">
        <attribute name="title">
@@ -614,7 +614,7 @@
           <item row="0" column="0">
            <widget class="QTabWidget" name="tabWidget_statistics">
             <property name="currentIndex">
-             <number>0</number>
+             <number>3</number>
             </property>
             <widget class="QWidget" name="tab_sundayservice">
              <attribute name="title">
@@ -1169,13 +1169,6 @@
                   </property>
                  </widget>
                 </item>
-                <item>
-                 <widget class="QPushButton" name="pushButton_reload_attlist">
-                  <property name="text">
-                   <string>Reload</string>
-                  </property>
-                 </widget>
-                </item>
                </layout>
               </widget>
              </widget>
@@ -1445,14 +1438,14 @@
            <widget class="QPushButton" name="pushButton_addmember">
             <property name="geometry">
              <rect>
-              <x>10</x>
-              <y>430</y>
-              <width>98</width>
+              <x>0</x>
+              <y>560</y>
+              <width>171</width>
               <height>27</height>
              </rect>
             </property>
             <property name="text">
-             <string>Add!</string>
+             <string>Add new member!</string>
             </property>
            </widget>
           </widget>

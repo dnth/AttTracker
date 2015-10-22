@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file 'tabbed.ui'
 #
-# Created: Wed Oct 21 17:15:46 2015
+# Created: Thu Oct 22 17:14:52 2015
 #      by: PyQt4 UI code generator 4.11.3
 #
 # WARNING! All changes made in this file will be lost!
@@ -26,7 +26,7 @@ except AttributeError:
 class Ui_LWCAttendanceTaker(object):
     def setupUi(self, LWCAttendanceTaker):
         LWCAttendanceTaker.setObjectName(_fromUtf8("LWCAttendanceTaker"))
-        LWCAttendanceTaker.resize(1050, 644)
+        LWCAttendanceTaker.resize(1050, 776)
         sizePolicy = QtGui.QSizePolicy(QtGui.QSizePolicy.Preferred, QtGui.QSizePolicy.Preferred)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
@@ -681,9 +681,6 @@ class Ui_LWCAttendanceTaker(object):
         self.pushButton_delete = QtGui.QPushButton(self.layoutWidget2)
         self.pushButton_delete.setObjectName(_fromUtf8("pushButton_delete"))
         self.horizontalLayout_7.addWidget(self.pushButton_delete)
-        self.pushButton_reload_attlist = QtGui.QPushButton(self.layoutWidget2)
-        self.pushButton_reload_attlist.setObjectName(_fromUtf8("pushButton_reload_attlist"))
-        self.horizontalLayout_7.addWidget(self.pushButton_reload_attlist)
         self.verticalLayout_2.addWidget(self.groupBox_3)
         self.tabWidget_adminmarking.addTab(self.tab_5, _fromUtf8(""))
         self.tab = QtGui.QWidget()
@@ -830,7 +827,7 @@ class Ui_LWCAttendanceTaker(object):
         self.calendarWidget_newmember_passing.setObjectName(_fromUtf8("calendarWidget_newmember_passing"))
         self.formLayout_6.setWidget(1, QtGui.QFormLayout.FieldRole, self.calendarWidget_newmember_passing)
         self.pushButton_addmember = QtGui.QPushButton(self.tab_4)
-        self.pushButton_addmember.setGeometry(QtCore.QRect(10, 430, 98, 27))
+        self.pushButton_addmember.setGeometry(QtCore.QRect(0, 560, 171, 27))
         self.pushButton_addmember.setObjectName(_fromUtf8("pushButton_addmember"))
         self.tabWidget_adminmarking.addTab(self.tab_4, _fromUtf8(""))
         self.tab_2 = QtGui.QWidget()
@@ -952,8 +949,8 @@ class Ui_LWCAttendanceTaker(object):
         self.menubar.addAction(self.menuFlie.menuAction())
 
         self.retranslateUi(LWCAttendanceTaker)
-        self.tab_widget.setCurrentIndex(3)
-        self.tabWidget_statistics.setCurrentIndex(0)
+        self.tab_widget.setCurrentIndex(0)
+        self.tabWidget_statistics.setCurrentIndex(3)
         self.stackedWidget_ss.setCurrentIndex(0)
         self.stackedWidget_ws.setCurrentIndex(0)
         self.stackedWidget_fpm.setCurrentIndex(0)
@@ -1009,7 +1006,6 @@ class Ui_LWCAttendanceTaker(object):
         self.label_static_admintab_remarks.setText(_translate("LWCAttendanceTaker", "Remarks", None))
         self.pushButton_submit.setText(_translate("LWCAttendanceTaker", "Submit", None))
         self.pushButton_delete.setText(_translate("LWCAttendanceTaker", "Delete", None))
-        self.pushButton_reload_attlist.setText(_translate("LWCAttendanceTaker", "Reload", None))
         self.tabWidget_adminmarking.setTabText(self.tabWidget_adminmarking.indexOf(self.tab_5), _translate("LWCAttendanceTaker", "Admin Marking", None))
         self.tabWidget_adminmarking.setTabText(self.tabWidget_adminmarking.indexOf(self.tab), _translate("LWCAttendanceTaker", "Members Count", None))
         self.pushButton_commitchange.setText(_translate("LWCAttendanceTaker", "Commit Changes", None))
@@ -1023,7 +1019,7 @@ class Ui_LWCAttendanceTaker(object):
         self.label_7.setText(_translate("LWCAttendanceTaker", "Contact Num", None))
         self.label_5.setText(_translate("LWCAttendanceTaker", "Date of Birth", None))
         self.label_6.setText(_translate("LWCAttendanceTaker", "Passing Date", None))
-        self.pushButton_addmember.setText(_translate("LWCAttendanceTaker", "Add!", None))
+        self.pushButton_addmember.setText(_translate("LWCAttendanceTaker", "Add new member!", None))
         self.tabWidget_adminmarking.setTabText(self.tabWidget_adminmarking.indexOf(self.tab_4), _translate("LWCAttendanceTaker", "Add New Members", None))
         self.groupBox_7.setTitle(_translate("LWCAttendanceTaker", "Profile", None))
         self.nameLabel_2.setText(_translate("LWCAttendanceTaker", "Name", None))
